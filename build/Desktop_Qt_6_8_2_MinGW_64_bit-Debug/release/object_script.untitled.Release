@@ -1,0 +1,10 @@
+release/MQTT.o
+release/command.pb.o
+release/decoder.o
+release/main.o
+release/udpreceiver.o
+release/widget.o
+release/moc_MQTT.o
+release/moc_decoder.o
+release/moc_udpreceiver.o
+release/moc_widget.o

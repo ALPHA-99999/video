@@ -1,0 +1,6 @@
+# Copy this file to local_paths.pri and edit for your machine.
+
+FFMPEG_ROOT = D:/GitHub/vcpkg/packages/ffmpeg_x64-windows
+PROTOBUF_ROOT = D:/GitHub/vcpkg/packages/protobuf_x64-windows
+ABSEIL_ROOT = D:/GitHub/vcpkg/packages/abseil_x64-windows
+QMQTT_LIB_ROOT = C:/Users/24981/Desktop/lib

@@ -1,0 +1,10 @@
+debug/MQTT.o
+debug/command.pb.o
+debug/decoder.o
+debug/main.o
+debug/udpreceiver.o
+debug/widget.o
+debug/moc_MQTT.o
+debug/moc_decoder.o
+debug/moc_udpreceiver.o
+debug/moc_widget.o
