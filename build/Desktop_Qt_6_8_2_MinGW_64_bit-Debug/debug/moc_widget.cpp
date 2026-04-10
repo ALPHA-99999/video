@@ -8,7 +8,6 @@
 
 #include "../../../widget.h"
 #include <QtGui/qtextcursor.h>
-#include <QtGui/qscreen.h>
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>
@@ -40,8 +39,14 @@ struct qt_meta_tag_ZN6WidgetE_t {};
 #ifdef QT_MOC_HAS_STRINGDATA
 static constexpr auto qt_meta_stringdata_ZN6WidgetE = QtMocHelpers::stringData(
     "Widget",
-    "show__image",
-    ""
+    "onFramePresented",
+    "",
+    "udpFirstRecvMs",
+    "udpAssembledMs",
+    "decodeStartMs",
+    "decodeDoneMs",
+    "uiSubmitMs",
+    "renderDoneMs"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -61,10 +66,10 @@ Q_CONSTINIT static const uint qt_meta_data_ZN6WidgetE[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   20,    2, 0x08,    1 /* Private */,
+       1,    6,   20,    2, 0x08,    1 /* Private */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QImage,    2,
+    QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong,    3,    4,    5,    6,    7,    8,
 
        0        // eod
 };
@@ -78,9 +83,14 @@ Q_CONSTINIT const QMetaObject Widget::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_tag_ZN6WidgetE_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<Widget, std::true_type>,
-        // method 'show__image'
+        // method 'onFramePresented'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QImage, std::false_type>
+        QtPrivate::TypeAndForceComplete<qint64, std::false_type>,
+        QtPrivate::TypeAndForceComplete<qint64, std::false_type>,
+        QtPrivate::TypeAndForceComplete<qint64, std::false_type>,
+        QtPrivate::TypeAndForceComplete<qint64, std::false_type>,
+        QtPrivate::TypeAndForceComplete<qint64, std::false_type>,
+        QtPrivate::TypeAndForceComplete<qint64, std::false_type>
     >,
     nullptr
 } };
@@ -90,7 +100,7 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
     auto *_t = static_cast<Widget *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->show__image((*reinterpret_cast< std::add_pointer_t<QImage>>(_a[1]))); break;
+        case 0: _t->onFramePresented((*reinterpret_cast< std::add_pointer_t<qint64>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<qint64>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<qint64>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<qint64>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<qint64>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<qint64>>(_a[6]))); break;
         default: ;
         }
     }

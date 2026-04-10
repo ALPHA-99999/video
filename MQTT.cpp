@@ -16,7 +16,7 @@ MQTT::~MQTT()
 void MQTT::onConnected() {
 
     qDebug() << "connected" ;
-
+   // std::cout<<  "connected" <<std::endl;
      subscribe("CustomControl", 1);
 
 
@@ -35,7 +35,7 @@ void MQTT::onReceived(const QMQTT::Message &message)
         qDebug() << "❌ GameStatus 解析失败";
         return;
     }
-       qDebug() <<    data.size();
+      // qDebug() <<    data.size();
     }
 }
 

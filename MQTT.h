@@ -5,7 +5,7 @@
 #include <QTimer>
 #include <QApplication>
  #include <command.pb.h>
-const QHostAddress EXAMPLE_HOST("127.0.0.1");
+const QHostAddress EXAMPLE_HOST("192.168.12.1");
 const quint16 EXAMPLE_PORT = 3333;
 
 class MQTT : public QMQTT::Client
@@ -19,7 +19,7 @@ public:
 
     {
         this->setClientId("3");
-
+        this->setUsername("33");
         connect(this, &MQTT::connected, this, &MQTT::onConnected);
         connect(this, &MQTT::subscribed, this, &MQTT::onSubscribed);
         connect(this, &MQTT::published, this, &MQTT::onPublished);

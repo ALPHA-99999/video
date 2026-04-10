@@ -31,22 +31,25 @@ Widget::Widget(QWidget *parent)
     connect(m_decoder, &MyDecoder::show__frame, ui->videoWidget, &VideoGLWidget::submitFrame);
     connect(ui->videoWidget, &VideoGLWidget::framePresented, this, &Widget::onFramePresented);
 
-   m_mqtt->connectToHost();
-    // connect(&RemoteControl_Timer, &QTimer::timeout, this,[this](){
-    //     /::Message  Message;
-    //     Message.setQos(1);
-    //     Message.setTopic("RemoteControl");
-    //     std::string data;
-    //     //m_mqtt->RemoteControl.SerializeToString(&data);
-    //     QByteArray payload(data.data(), data.size());
-    //     Message.setPayload(payload);
-    //     if (m_mqtt->connectionState()==QMQTT::ConnectionState::STATE_CONNECTED) m_mqtt->publish(Message);
 
-    // });
-  //  RemoteControl_Timer.start(15);
+   m_mqtt->connectToHost();
+  //  m_mqtt->disconnectFromHost();
+//     connect(&RemoteControl_Timer, &QTimer::timeout, this,[this](){
+//         // /::Message  Message;
+//         // Message.setQos(1);
+//         // Message.setTopic("RemoteControl");
+//         // std::string data;
+//         // //m_mqtt->RemoteControl.SerializeToString(&data);
+//         // QByteArray payload(data.data(), data.size());
+//         // Message.setPayload(payload);
+//         // if (m_mqtt->connectionState()==QMQTT::ConnectionState::STATE_CONNECTED) m_mqtt->publish(Message);
+// if (m_mqtt->connectionState()!=QMQTT::ConnectionState::STATE_CONNECTED)  m_mqtt->connectToHost();;
+//     });
+   RemoteControl_Timer.start(15);
 
     m_UDPThread->start();
     m_DecoderThread->start();
+
      setMouseTracking(true);
 setFocusPolicy(Qt::ClickFocus);
 

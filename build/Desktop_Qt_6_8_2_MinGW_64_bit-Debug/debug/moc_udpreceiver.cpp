@@ -43,6 +43,9 @@ static constexpr auto qt_meta_stringdata_ZN11UdpReceiverE = QtMocHelpers::string
     "",
     "error",
     "frame_toproess",
+    "frameData",
+    "udpFirstRecvMs",
+    "udpAssembledMs",
     "readPendingDatagrams",
     "updateStatistics"
 );
@@ -65,15 +68,15 @@ Q_CONSTINIT static const uint qt_meta_data_ZN11UdpReceiverE[] = {
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
        1,    1,   38,    2, 0x06,    1 /* Public */,
-       4,    1,   41,    2, 0x06,    3 /* Public */,
+       4,    3,   41,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       5,    0,   44,    2, 0x08,    5 /* Private */,
-       6,    0,   45,    2, 0x08,    6 /* Private */,
+       8,    0,   48,    2, 0x08,    7 /* Private */,
+       9,    0,   49,    2, 0x08,    8 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
-    QMetaType::Void, QMetaType::QByteArray,    2,
+    QMetaType::Void, QMetaType::QByteArray, QMetaType::LongLong, QMetaType::LongLong,    5,    6,    7,
 
  // slots: parameters
     QMetaType::Void,
@@ -97,6 +100,8 @@ Q_CONSTINIT const QMetaObject UdpReceiver::staticMetaObject = { {
         // method 'frame_toproess'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QByteArray, std::false_type>,
+        QtPrivate::TypeAndForceComplete<qint64, std::false_type>,
+        QtPrivate::TypeAndForceComplete<qint64, std::false_type>,
         // method 'readPendingDatagrams'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'updateStatistics'
@@ -111,7 +116,7 @@ void UdpReceiver::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: _t->errorOccurred((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 1: _t->frame_toproess((*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[1]))); break;
+        case 1: _t->frame_toproess((*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<qint64>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<qint64>>(_a[3]))); break;
         case 2: _t->readPendingDatagrams(); break;
         case 3: _t->updateStatistics(); break;
         default: ;
@@ -127,7 +132,7 @@ void UdpReceiver::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
             }
         }
         {
-            using _q_method_type = void (UdpReceiver::*)(QByteArray );
+            using _q_method_type = void (UdpReceiver::*)(QByteArray , qint64 , qint64 );
             if (_q_method_type _q_method = &UdpReceiver::frame_toproess; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 1;
                 return;
@@ -175,9 +180,9 @@ void UdpReceiver::errorOccurred(const QString & _t1)
 }
 
 // SIGNAL 1
-void UdpReceiver::frame_toproess(QByteArray _t1)
+void UdpReceiver::frame_toproess(QByteArray _t1, qint64 _t2, qint64 _t3)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_WARNING_POP

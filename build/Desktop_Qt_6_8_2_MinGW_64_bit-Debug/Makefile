@@ -245,6 +245,7 @@ Makefile: ../../untitled.pro D:/Qt/6.8.2/mingw_64/mkspecs/win32-g++/qmake.conf D
 		D:/Qt/6.8.2/mingw_64/mkspecs/features/toolchain.prf \
 		D:/Qt/6.8.2/mingw_64/mkspecs/features/default_pre.prf \
 		D:/Qt/6.8.2/mingw_64/mkspecs/features/win32/default_pre.prf \
+		../../local_paths.pri \
 		D:/Qt/6.8.2/mingw_64/mkspecs/features/resolve_config.prf \
 		D:/Qt/6.8.2/mingw_64/mkspecs/features/exclusive_builds_post.prf \
 		D:/Qt/6.8.2/mingw_64/mkspecs/features/default_post.prf \
@@ -266,6 +267,8 @@ Makefile: ../../untitled.pro D:/Qt/6.8.2/mingw_64/mkspecs/win32-g++/qmake.conf D
 		D:/Qt/6.8.2/mingw_64/mkspecs/features/yacc.prf \
 		D:/Qt/6.8.2/mingw_64/mkspecs/features/lex.prf \
 		../../untitled.pro \
+		D:/Qt/6.8.2/mingw_64/lib/Qt6OpenGLWidgets.prl \
+		D:/Qt/6.8.2/mingw_64/lib/Qt6OpenGL.prl \
 		D:/Qt/6.8.2/mingw_64/lib/Qt6Widgets.prl \
 		D:/Qt/6.8.2/mingw_64/lib/Qt6Gui.prl \
 		D:/Qt/6.8.2/mingw_64/lib/Qt6Network.prl \
@@ -448,6 +451,7 @@ D:/Qt/6.8.2/mingw_64/mkspecs/features/exclusive_builds.prf:
 D:/Qt/6.8.2/mingw_64/mkspecs/features/toolchain.prf:
 D:/Qt/6.8.2/mingw_64/mkspecs/features/default_pre.prf:
 D:/Qt/6.8.2/mingw_64/mkspecs/features/win32/default_pre.prf:
+../../local_paths.pri:
 D:/Qt/6.8.2/mingw_64/mkspecs/features/resolve_config.prf:
 D:/Qt/6.8.2/mingw_64/mkspecs/features/exclusive_builds_post.prf:
 D:/Qt/6.8.2/mingw_64/mkspecs/features/default_post.prf:
@@ -469,6 +473,8 @@ D:/Qt/6.8.2/mingw_64/mkspecs/features/exceptions.prf:
 D:/Qt/6.8.2/mingw_64/mkspecs/features/yacc.prf:
 D:/Qt/6.8.2/mingw_64/mkspecs/features/lex.prf:
 ../../untitled.pro:
+D:/Qt/6.8.2/mingw_64/lib/Qt6OpenGLWidgets.prl:
+D:/Qt/6.8.2/mingw_64/lib/Qt6OpenGL.prl:
 D:/Qt/6.8.2/mingw_64/lib/Qt6Widgets.prl:
 D:/Qt/6.8.2/mingw_64/lib/Qt6Gui.prl:
 D:/Qt/6.8.2/mingw_64/lib/Qt6Network.prl:

@@ -3,8 +3,10 @@ release/command.pb.o
 release/decoder.o
 release/main.o
 release/udpreceiver.o
+release/videoglwidget.o
 release/widget.o
 release/moc_MQTT.o
 release/moc_decoder.o
 release/moc_udpreceiver.o
+release/moc_videoglwidget.o
 release/moc_widget.o

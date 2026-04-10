@@ -12,8 +12,8 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QWidget>
+#include "videoglwidget.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -21,7 +21,7 @@ class Ui_Widget
 {
 public:
     QHBoxLayout *horizontalLayout;
-    QLabel *label;
+    VideoGLWidget *videoWidget;
 
     void setupUi(QWidget *Widget)
     {
@@ -35,16 +35,15 @@ public:
         Widget->setSizePolicy(sizePolicy);
         horizontalLayout = new QHBoxLayout(Widget);
         horizontalLayout->setObjectName("horizontalLayout");
-        label = new QLabel(Widget);
-        label->setObjectName("label");
+        videoWidget = new VideoGLWidget(Widget);
+        videoWidget->setObjectName("videoWidget");
         QSizePolicy sizePolicy1(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
-        label->setSizePolicy(sizePolicy1);
-        label->setAlignment(Qt::AlignCenter);
+        sizePolicy1.setHeightForWidth(videoWidget->sizePolicy().hasHeightForWidth());
+        videoWidget->setSizePolicy(sizePolicy1);
 
-        horizontalLayout->addWidget(label);
+        horizontalLayout->addWidget(videoWidget);
 
 
         retranslateUi(Widget);
@@ -55,7 +54,6 @@ public:
     void retranslateUi(QWidget *Widget)
     {
         Widget->setWindowTitle(QCoreApplication::translate("Widget", "Widget", nullptr));
-        label->setText(QCoreApplication::translate("Widget", "TextLabel", nullptr));
     } // retranslateUi
 
 };

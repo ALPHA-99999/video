@@ -7,8 +7,6 @@
 *****************************************************************************/
 
 #include "../../../decoder.h"
-#include <QtGui/qtextcursor.h>
-#include <QtGui/qscreen.h>
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>
@@ -42,7 +40,8 @@ static constexpr auto qt_meta_stringdata_ZN9MyDecoderE = QtMocHelpers::stringDat
     "MyDecoder",
     "show__frame",
     "",
-    "image"
+    "VideoFrame",
+    "frame"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -65,7 +64,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN9MyDecoderE[] = {
        1,    1,   20,    2, 0x06,    1 /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QImage,    3,
+    QMetaType::Void, 0x80000000 | 3,    4,
 
        0        // eod
 };
@@ -81,7 +80,7 @@ Q_CONSTINIT const QMetaObject MyDecoder::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<MyDecoder, std::true_type>,
         // method 'show__frame'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QImage, std::false_type>
+        QtPrivate::TypeAndForceComplete<const VideoFrame &, std::false_type>
     >,
     nullptr
 } };
@@ -91,14 +90,26 @@ void MyDecoder::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
     auto *_t = static_cast<MyDecoder *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: _t->show__frame((*reinterpret_cast< std::add_pointer_t<QImage>>(_a[1]))); break;
+        case 0: _t->show__frame((*reinterpret_cast< std::add_pointer_t<VideoFrame>>(_a[1]))); break;
         default: ;
+        }
+    }
+    if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+        case 0:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< VideoFrame >(); break;
+            }
+            break;
         }
     }
     if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _q_method_type = void (MyDecoder::*)(QImage );
+            using _q_method_type = void (MyDecoder::*)(const VideoFrame & );
             if (_q_method_type _q_method = &MyDecoder::show__frame; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
@@ -132,14 +143,14 @@ int MyDecoder::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 1)
-            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
+            qt_static_metacall(this, _c, _id, _a);
         _id -= 1;
     }
     return _id;
 }
 
 // SIGNAL 0
-void MyDecoder::show__frame(QImage _t1)
+void MyDecoder::show__frame(const VideoFrame & _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

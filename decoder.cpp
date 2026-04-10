@@ -4,6 +4,30 @@
 #include <cstring>
 
 namespace {
+bool isHardwarePixelFormatForDevice(AVHWDeviceType deviceType, AVPixelFormat pixelFormat)
+{
+    switch (deviceType) {
+    case AV_HWDEVICE_TYPE_D3D11VA:
+        return pixelFormat == AV_PIX_FMT_D3D11 || pixelFormat == AV_PIX_FMT_D3D11VA_VLD;
+    case AV_HWDEVICE_TYPE_DXVA2:
+        return pixelFormat == AV_PIX_FMT_DXVA2_VLD;
+    default:
+        return false;
+    }
+}
+
+const char *hwDeviceTypeName(AVHWDeviceType type)
+{
+    switch (type) {
+    case AV_HWDEVICE_TYPE_D3D11VA:
+        return "D3D11VA";
+    case AV_HWDEVICE_TYPE_DXVA2:
+        return "DXVA2";
+    default:
+        return "Software";
+    }
+}
+
 inline void copyPlaneTight(QByteArray &dst, const uint8_t *src, int srcLinesize, int rowBytes, int rows)
 {
     if (!src || rowBytes <= 0 || rows <= 0) {
@@ -35,14 +59,12 @@ MyDecoder::~MyDecoder()
     if (m_frame) {
         av_frame_free(&m_frame);
     }
-#if USE_HEVC_QSV_DECODER
     if (m_swFrame) {
         av_frame_free(&m_swFrame);
     }
     if (m_hwDeviceCtx) {
         av_buffer_unref(&m_hwDeviceCtx);
     }
-#endif
     if (m_rgbSwsCtx) {
         sws_freeContext(m_rgbSwsCtx);
     }
@@ -51,54 +73,98 @@ MyDecoder::~MyDecoder()
     }
 }
 
-#if USE_HEVC_QSV_DECODER
 enum AVPixelFormat MyDecoder::getHwFormat(AVCodecContext *ctx, const enum AVPixelFormat *pix_fmts)
 {
     auto *decoder = static_cast<MyDecoder *>(ctx->opaque);
     if (!decoder) {
         return pix_fmts[0];
     }
+
+    for (const enum AVPixelFormat *fmt = pix_fmts; *fmt != AV_PIX_FMT_NONE; ++fmt) {
+        if (decoder->m_hwEnabled &&
+            isHardwarePixelFormatForDevice(decoder->m_hwDeviceType, *fmt)) {
+            decoder->m_hwPixFmt = *fmt;
+            return *fmt;
+        }
+    }
+
     while (*pix_fmts != AV_PIX_FMT_NONE) {
-        if (*pix_fmts == decoder->m_hwPixFmt) {
+        if (*pix_fmts != AV_PIX_FMT_D3D11 &&
+            *pix_fmts != AV_PIX_FMT_D3D11VA_VLD &&
+            *pix_fmts != AV_PIX_FMT_DXVA2_VLD) {
             return *pix_fmts;
         }
         ++pix_fmts;
     }
-    decoder->m_hwEnabled = false;
-    qWarning() << "QSV像素格式不可用，自动切换软件像素格式";
-    return pix_fmts[0];
+
+    decoder->disableHardwareDecoding();
+    qWarning() << "当前硬解像素格式不可用，自动切换软件像素格式";
+    return AV_PIX_FMT_NONE;
 }
 
-bool MyDecoder::initQsvDevice()
+void MyDecoder::disableHardwareDecoding()
 {
-    if (av_hwdevice_ctx_create(&m_hwDeviceCtx, AV_HWDEVICE_TYPE_QSV, nullptr, nullptr, 0) < 0) {
-        qWarning() << "创建QSV硬件设备失败";
-        return false;
+    m_hwEnabled = false;
+    m_hwPixFmt = AV_PIX_FMT_NONE;
+    m_hwDeviceType = AV_HWDEVICE_TYPE_NONE;
+    if (m_codecCtx) {
+        m_codecCtx->opaque = nullptr;
+        m_codecCtx->get_format = nullptr;
+        if (m_codecCtx->hw_device_ctx) {
+            av_buffer_unref(&m_codecCtx->hw_device_ctx);
+        }
     }
-    m_codecCtx->hw_device_ctx = av_buffer_ref(m_hwDeviceCtx);
-    if (!m_codecCtx->hw_device_ctx) {
-        qWarning() << "绑定QSV设备到解码器失败";
-        return false;
+    if (m_hwDeviceCtx) {
+        av_buffer_unref(&m_hwDeviceCtx);
     }
-    m_hwEnabled = true;
-    return true;
 }
-#endif
+
+bool MyDecoder::initHardwareDevice()
+{
+    struct HardwareCandidate {
+        AVHWDeviceType deviceType;
+        AVPixelFormat pixelFormat;
+    };
+
+    static const HardwareCandidate kCandidates[] = {
+        {AV_HWDEVICE_TYPE_D3D11VA, AV_PIX_FMT_D3D11},
+        {AV_HWDEVICE_TYPE_DXVA2, AV_PIX_FMT_DXVA2_VLD},
+    };
+
+    for (const HardwareCandidate &candidate : kCandidates) {
+        AVBufferRef *deviceCtx = nullptr;
+        const int ret = av_hwdevice_ctx_create(&deviceCtx, candidate.deviceType, nullptr, nullptr, 0);
+        if (ret < 0) {
+            qWarning() << "创建" << hwDeviceTypeName(candidate.deviceType) << "硬件设备失败:" << ret;
+            continue;
+        }
+
+        AVBufferRef *codecHwCtx = av_buffer_ref(deviceCtx);
+        if (!codecHwCtx) {
+            qWarning() << "绑定" << hwDeviceTypeName(candidate.deviceType) << "设备到解码器失败";
+            av_buffer_unref(&deviceCtx);
+            continue;
+        }
+
+        m_hwDeviceCtx = deviceCtx;
+        m_codecCtx->hw_device_ctx = codecHwCtx;
+        m_hwDeviceType = candidate.deviceType;
+        m_hwPixFmt = candidate.pixelFormat;
+        m_hwEnabled = true;
+        m_codecCtx->opaque = this;
+        m_codecCtx->get_format = getHwFormat;
+        qDebug() << "启用" << hwDeviceTypeName(m_hwDeviceType) << "硬件解码";
+        return true;
+    }
+
+    disableHardwareDecoding();
+    qWarning() << "Windows硬件解码初始化失败，回退软件HEVC解码";
+    return false;
+}
 
 bool MyDecoder::initDecoder()
 {
-#if USE_HEVC_QSV_DECODER
-    m_codec = avcodec_find_decoder_by_name("hevc_qsv");
-    if (!m_codec) {
-        qWarning() << "找不到hevc_qsv解码器，回退软件HEVC";
-        m_codec = avcodec_find_decoder(AV_CODEC_ID_HEVC);
-        m_hwEnabled = false;
-    } else {
-        m_hwEnabled = true;
-    }
-#else
     m_codec = avcodec_find_decoder(AV_CODEC_ID_HEVC);
-#endif
     if (!m_codec) {
         qWarning() << "找不到HEVC解码器";
         return false;
@@ -110,25 +176,18 @@ bool MyDecoder::initDecoder()
         return false;
     }
 
-#if USE_HEVC_QSV_DECODER
-    if (m_hwEnabled) {
-        m_hwPixFmt = AV_PIX_FMT_QSV;
-        m_codecCtx->opaque = this;
-        m_codecCtx->get_format = getHwFormat;
-        if (!initQsvDevice()) {
-            m_codecCtx->opaque = nullptr;
-            m_codecCtx->get_format = nullptr;
-            m_hwEnabled = false;
-        } else {
-            qDebug() << "启用hevc_qsv硬件解码";
-        }
-    }
-#endif
+    initHardwareDevice();
 
     m_codecCtx->flags |= AV_CODEC_FLAG_LOW_DELAY;
     m_codecCtx->flags2 |= AV_CODEC_FLAG2_FAST;
 
-    if (avcodec_open2(m_codecCtx, m_codec, nullptr) < 0) {
+    int openRet = avcodec_open2(m_codecCtx, m_codec, nullptr);
+    if (openRet < 0 && m_hwEnabled) {
+        qWarning() << "无法打开" << hwDeviceTypeName(m_hwDeviceType) << "硬件解码器，回退软件HEVC:" << openRet;
+        disableHardwareDecoding();
+        openRet = avcodec_open2(m_codecCtx, m_codec, nullptr);
+    }
+    if (openRet < 0) {
         qWarning() << "无法打开HEVC解码器";
         avcodec_free_context(&m_codecCtx);
         return false;
@@ -136,12 +195,8 @@ bool MyDecoder::initDecoder()
 
     m_packet = av_packet_alloc();
     m_frame = av_frame_alloc();
-#if USE_HEVC_QSV_DECODER
     m_swFrame = av_frame_alloc();
     if (!m_packet || !m_frame || !m_swFrame) {
-#else
-    if (!m_packet || !m_frame) {
-#endif
         qWarning() << "解码缓存分配失败";
         return false;
     }
@@ -197,23 +252,22 @@ void MyDecoder::Decode(QByteArray frameData, qint64 udpFirstRecvMs, qint64 udpAs
 bool MyDecoder::extractFramePlanes(AVFrame *frame, VideoFrame &outFrame)
 {
     AVFrame *srcFrame = frame;
-#if USE_HEVC_QSV_DECODER
-    if (m_hwEnabled && frame->format == m_hwPixFmt) {
+    if (m_hwEnabled && static_cast<AVPixelFormat>(frame->format) == m_hwPixFmt) {
         if (!m_swFrame) {
-            qWarning() << "无法分配软件帧用于QSV数据拷贝";
+            qWarning() << "无法分配软件帧用于硬件数据拷贝";
             return false;
         }
         av_frame_unref(m_swFrame);
         int ret = av_hwframe_transfer_data(m_swFrame, frame, 0);
         if (ret < 0) {
-            qWarning() << "QSV硬件帧转软件帧失败:" << ret;
+            qWarning() << hwDeviceTypeName(m_hwDeviceType) << "硬件帧转软件帧失败:" << ret;
             return false;
         }
         m_swFrame->width = frame->width;
         m_swFrame->height = frame->height;
+        m_swFrame->format = AV_PIX_FMT_NV12;
         srcFrame = m_swFrame;
     }
-#endif
 
     const int width = srcFrame->width;
     const int height = srcFrame->height;

@@ -63,9 +63,6 @@ private:
     FrameHeader parseHeader(const QByteArray &data);
     void processFrameData(quint16 frameId);
     void cleanupOldFrames();
-
-
-
     QImage frameDecoded(QImage image);
 
 };
