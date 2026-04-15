@@ -7,6 +7,7 @@
 #include "videoglwidget.h"
 #include "udpreceiver.h"
  #include "MQTT.h"
+#include "mqttframereceiver.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class Widget;
@@ -42,6 +43,7 @@ private:
     QThread *m_DecoderThread = nullptr;
     //QMQTT::Client *m_mqtt=nullptr;
     UdpReceiver *m_Udpreceiver = nullptr;
+    MqttFrameReceiver *m_mqttFrameReceiver = nullptr;
     MyDecoder *m_decoder = nullptr;
     MQTT *m_mqtt = nullptr;
     quint64 m_latencyFrameCount = 0;

@@ -28,6 +28,20 @@ const char *hwDeviceTypeName(AVHWDeviceType type)
     }
 }
 
+const char *pictureTypeName(AVPictureType type)
+{
+    switch (type) {
+    case AV_PICTURE_TYPE_I:
+        return "I";
+    case AV_PICTURE_TYPE_P:
+        return "P";
+    case AV_PICTURE_TYPE_B:
+        return "B";
+    default:
+        return "?";
+    }
+}
+
 inline void copyPlaneTight(QByteArray &dst, const uint8_t *src, int srcLinesize, int rowBytes, int rows)
 {
     if (!src || rowBytes <= 0 || rows <= 0) {
@@ -192,6 +206,11 @@ bool MyDecoder::initDecoder()
         avcodec_free_context(&m_codecCtx);
         return false;
     }
+    if (m_hwEnabled) {
+        qDebug() << "启用" << hwDeviceTypeName(m_hwDeviceType) << "硬件HEVC解码";
+    } else {
+        qDebug() << "启用软件HEVC解码";
+    }
 
     m_packet = av_packet_alloc();
     m_frame = av_frame_alloc();
@@ -231,6 +250,11 @@ void MyDecoder::Decode(QByteArray frameData, qint64 udpFirstRecvMs, qint64 udpAs
         av_frame_unref(m_frame);
         ret = avcodec_receive_frame(m_codecCtx, m_frame);
         if (ret == 0) {
+            if (m_frame->pict_type == AV_PICTURE_TYPE_I || m_frame->pict_type == AV_PICTURE_TYPE_P) {
+                qDebug().noquote() << QString("Decoded %1 frame, inputSize=%2")
+                                          .arg(pictureTypeName(m_frame->pict_type))
+                                          .arg(frameData.size());
+            }
             VideoFrame outFrame;
             outFrame.udpFirstRecvMs = udpFirstRecvMs;
             outFrame.udpAssembledMs = udpAssembledMs;

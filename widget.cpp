@@ -3,6 +3,7 @@
 #include "ui_widget.h"
 #include "udpreceiver.h"
 #include "decoder.h"
+#include "mqttframereceiver.h"
 #include "Qthread.h"
 #include <QDateTime>
 #include <algorithm>
@@ -19,59 +20,52 @@ Widget::Widget(QWidget *parent)
 
 
     m_Udpreceiver = new UdpReceiver();
+    m_mqttFrameReceiver = new MqttFrameReceiver();
     m_decoder = new MyDecoder();
     m_mqtt = new MQTT(EXAMPLE_HOST, EXAMPLE_PORT, this);
 
     m_Udpreceiver->moveToThread(m_UDPThread);
+    m_mqttFrameReceiver->moveToThread(m_UDPThread);
     m_decoder->moveToThread(m_DecoderThread);
     qRegisterMetaType<VideoFrame>("VideoFrame");
+    qRegisterMetaType<QByteArray>("QByteArray");
+    qRegisterMetaType<qint64>("qint64");
 
     connect(m_Udpreceiver, &UdpReceiver::frame_toproess, m_decoder, &MyDecoder::Decode);
-    connect(m_UDPThread, &QThread::started, m_Udpreceiver, &UdpReceiver::startListening);
+    connect(m_mqtt, &MQTT::customByteBlockReceived, m_mqttFrameReceiver, &MqttFrameReceiver::ingestPacket);
+    connect(m_mqttFrameReceiver, &MqttFrameReceiver::frame_toproess, m_decoder, &MyDecoder::Decode);
+  //  connect(m_UDPThread, &QThread::started, m_Udpreceiver, &UdpReceiver::startListening);
     connect(m_decoder, &MyDecoder::show__frame, ui->videoWidget, &VideoGLWidget::submitFrame);
     connect(ui->videoWidget, &VideoGLWidget::framePresented, this, &Widget::onFramePresented);
 
 
    m_mqtt->connectToHost();
   //  m_mqtt->disconnectFromHost();
-//     connect(&RemoteControl_Timer, &QTimer::timeout, this,[this](){
-//         // /::Message  Message;
-//         // Message.setQos(1);
-//         // Message.setTopic("RemoteControl");
-//         // std::string data;
-//         // //m_mqtt->RemoteControl.SerializeToString(&data);
-//         // QByteArray payload(data.data(), data.size());
-//         // Message.setPayload(payload);
-//         // if (m_mqtt->connectionState()==QMQTT::ConnectionState::STATE_CONNECTED) m_mqtt->publish(Message);
-// if (m_mqtt->connectionState()!=QMQTT::ConnectionState::STATE_CONNECTED)  m_mqtt->connectToHost();;
-//     });
-   RemoteControl_Timer.start(15);
+    connect(&RemoteControl_Timer, &QTimer::timeout, this,[this](){
+        QMQTT::Message  Message;
+        Message.setQos(1);
+        Message.setTopic("CustomControl");
+        m_mqtt->CustomControl.set_data("222");
+        std::string data;
+        m_mqtt->CustomControl.SerializeToString(&data);
+        QByteArray payload(data.data(), data.size());
+        Message.setPayload(payload);
+        if (m_mqtt->connectionState()==QMQTT::ConnectionState::STATE_CONNECTED) m_mqtt->publish(Message);
+if (m_mqtt->connectionState()!=QMQTT::ConnectionState::STATE_CONNECTED)  m_mqtt->connectToHost();;
+    });
+  // RemoteControl_Timer.start(1000);
 
     m_UDPThread->start();
     m_DecoderThread->start();
-
-     setMouseTracking(true);
-setFocusPolicy(Qt::ClickFocus);
-
-grabMouse(); // 捕获鼠标
-    // QCursor::setCursor(Qt::BlankCursor);
-
-    // // 2. 启用鼠标跟踪
-
-    // grabMouse(); // 捕获鼠标
-    // auto widgetCenter = this->rect().center();
-    // QPoint globalCenter = this->mapToGlobal(widgetCenter);
-
-    // // 4. 移动光标到中心
-    // QCursor::setPos(globalCenter);
-
 }
 
 Widget::~Widget()
 {
     delete ui;
     m_UDPThread->quit();
-        m_DecoderThread->quit();
+    m_DecoderThread->quit();
+    m_UDPThread->wait();
+    m_DecoderThread->wait();
 }
 
 void Widget::onFramePresented(qint64 udpFirstRecvMs,
@@ -95,6 +89,7 @@ void Widget::onFramePresented(qint64 udpFirstRecvMs,
     const qint64 fpsElapsedMs = renderDoneMs - m_fpsWindowStartMs;
     if (fpsElapsedMs >= 1000) {
         m_outputFps = static_cast<double>(m_fpsWindowFrames) * 1000.0 / static_cast<double>(fpsElapsedMs);
+        qDebug().noquote() << QString("[FPS] output=%.2f").arg(m_outputFps, 0, 'f', 2);
         m_fpsWindowStartMs = renderDoneMs;
         m_fpsWindowFrames = 0;
     }

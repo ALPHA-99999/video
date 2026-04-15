@@ -8,6 +8,7 @@ SOURCES += \
     command.pb.cc \
     decoder.cpp \
     main.cpp \
+    mqttframereceiver.cpp \
     udpreceiver.cpp \
     videoglwidget.cpp \
     widget.cpp
@@ -16,6 +17,7 @@ HEADERS += \
     MQTT.h \
     command.pb.h \
     decoder.h \
+    mqttframereceiver.h \
     udpreceiver.h \
     videoframe.h \
     videoglwidget.h \

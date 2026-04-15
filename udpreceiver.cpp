@@ -170,6 +170,10 @@ void UdpReceiver::processFrameData(quint16 frameId)
         if (completeFrame.size() == static_cast<int>(expectedSize)) {
             const qint64 firstRecvMs = m_frameFirstRecvMs.value(frameId, QDateTime::currentMSecsSinceEpoch());
             const qint64 assembledMs = QDateTime::currentMSecsSinceEpoch();
+            qDebug().noquote() << QString("UDP assembled frameId=0x%1 size=%2 fragments=%3")
+                                      .arg(frameId, 4, 16, QLatin1Char('0')).toUpper()
+                                      .arg(expectedSize)
+                                      .arg(fragmentIds.size());
             emit frame_toproess(completeFrame, firstRecvMs, assembledMs);
             m_totalFrames++;
 

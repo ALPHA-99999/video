@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QApplication>
+#include <QByteArray>
  #include <command.pb.h>
 const QHostAddress EXAMPLE_HOST("192.168.12.1");
 const quint16 EXAMPLE_PORT = 3333;
@@ -18,8 +19,9 @@ public:
         : QMQTT::Client(host, port, parent)
 
     {
-        this->setClientId("3");
+        this->setClientId("101");
         this->setUsername("33");
+      //  this->setCleanSession(true);
         connect(this, &MQTT::connected, this, &MQTT::onConnected);
         connect(this, &MQTT::subscribed, this, &MQTT::onSubscribed);
         connect(this, &MQTT::published, this, &MQTT::onPublished);
@@ -41,6 +43,10 @@ public slots:
 public:
    robomaster::GameStatus GameStatus;
    robomaster::CustomControl  CustomControl;
+   robomaster::CustomByteBlock CustomByteBlock;
+
+signals:
+   void customByteBlockReceived(const QByteArray &payload, qint64 recvMs);
 
 };
 
