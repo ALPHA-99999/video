@@ -4,6 +4,9 @@
 #include <cstring>
 
 namespace {
+// Temporary switch: force software decode on current branch.
+constexpr bool kEnableHardwareDecode = false;
+
 bool isHardwarePixelFormatForDevice(AVHWDeviceType deviceType, AVPixelFormat pixelFormat)
 {
     switch (deviceType) {
@@ -122,8 +125,9 @@ void MyDecoder::disableHardwareDecoding()
     m_hwPixFmt = AV_PIX_FMT_NONE;
     m_hwDeviceType = AV_HWDEVICE_TYPE_NONE;
     if (m_codecCtx) {
-        m_codecCtx->opaque = nullptr;
-        m_codecCtx->get_format = nullptr;
+        // Keep get_format callback alive for software pixel format negotiation.
+        m_codecCtx->opaque = this;
+        m_codecCtx->get_format = getHwFormat;
         if (m_codecCtx->hw_device_ctx) {
             av_buffer_unref(&m_codecCtx->hw_device_ctx);
         }
@@ -190,7 +194,17 @@ bool MyDecoder::initDecoder()
         return false;
     }
 
-    initHardwareDevice();
+    // Always provide a get_format callback. In software mode it selects the
+    // first non-hardware pixel format; in hardware mode it prefers hw formats.
+    m_codecCtx->opaque = this;
+    m_codecCtx->get_format = getHwFormat;
+
+    if (kEnableHardwareDecode) {
+        initHardwareDevice();
+    } else {
+        disableHardwareDecoding();
+        qDebug() << "已临时关闭硬件解码，使用软件HEVC解码";
+    }
 
     m_codecCtx->flags |= AV_CODEC_FLAG_LOW_DELAY;
     m_codecCtx->flags2 |= AV_CODEC_FLAG2_FAST;

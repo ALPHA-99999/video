@@ -34,7 +34,7 @@ Widget::Widget(QWidget *parent)
     connect(m_Udpreceiver, &UdpReceiver::frame_toproess, m_decoder, &MyDecoder::Decode);
     connect(m_mqtt, &MQTT::customByteBlockReceived, m_mqttFrameReceiver, &MqttFrameReceiver::ingestPacket);
     connect(m_mqttFrameReceiver, &MqttFrameReceiver::frame_toproess, m_decoder, &MyDecoder::Decode);
-  //  connect(m_UDPThread, &QThread::started, m_Udpreceiver, &UdpReceiver::startListening);
+    connect(m_UDPThread, &QThread::started, m_Udpreceiver, &UdpReceiver::startListening);
     connect(m_decoder, &MyDecoder::show__frame, ui->videoWidget, &VideoGLWidget::submitFrame);
     connect(ui->videoWidget, &VideoGLWidget::framePresented, this, &Widget::onFramePresented);
 

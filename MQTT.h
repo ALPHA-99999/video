@@ -19,9 +19,9 @@ public:
         : QMQTT::Client(host, port, parent)
 
     {
-        this->setClientId("101");
+        this->setClientId("3");
         this->setUsername("33");
-      //  this->setCleanSession(true);
+        this->setCleanSession(true);
         connect(this, &MQTT::connected, this, &MQTT::onConnected);
         connect(this, &MQTT::subscribed, this, &MQTT::onSubscribed);
         connect(this, &MQTT::published, this, &MQTT::onPublished);

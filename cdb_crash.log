@@ -1,0 +1,938 @@
+Opened log file 'C:\Users\24981\Desktop\UI\video\cdb_crash.log'
+
+************* Preparing the environment for Debugger Extensions Gallery repositories **************
+   ExtensionRepository : Implicit
+   UseExperimentalFeatureForNugetShare : true
+   AllowNugetExeUpdate : true
+   NonInteractiveNuget : true
+   AllowNugetMSCredentialProviderInstall : true
+   AllowParallelInitializationOfLocalRepositories : true
+
+   EnableRedirectToV8JsProvider : false
+
+   -- Configuring repositories
+      ----> Repository : LocalInstalled, Enabled: true
+      ----> Repository : UserExtensions, Enabled: true
+
+>>>>>>>>>>>>> Preparing the environment for Debugger Extensions Gallery repositories completed, duration 0.000 seconds
+
+************* Waiting for Debugger Extensions Gallery to Initialize **************
+
+>>>>>>>>>>>>> Waiting for Debugger Extensions Gallery to Initialize completed, duration 0.016 seconds
+   ----> Repository : UserExtensions, Enabled: true, Packages count: 0
+   ----> Repository : LocalInstalled, Enabled: true, Packages count: 30
+
+Microsoft (R) Windows Debugger Version 10.0.26100.7705 AMD64
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+CommandLine: C:\Users\24981\Desktop\UI\video\build\Desktop_Qt_6_8_2_MSVC2022_64bit-Debug\debug\untitled.exe
+NatVis script successfully loaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\atlmfc.natvis'
+NatVis script successfully loaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\ObjectiveC.natvis'
+NatVis script successfully loaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\concurrency.natvis'
+NatVis script successfully loaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\cpp_rest.natvis'
+NatVis script successfully loaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\stl.natvis'
+NatVis script successfully loaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Data.Json.natvis'
+NatVis script successfully loaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Geolocation.natvis'
+NatVis script successfully loaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Sensors.natvis'
+NatVis script successfully loaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Media.natvis'
+NatVis script successfully loaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\windows.natvis'
+NatVis script successfully loaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\winrt.natvis'
+
+************* Path validation summary **************
+Response                         Time (ms)     Location
+Deferred                                       srv*
+Symbol search path is: srv*
+Executable search path is: 
+
++------------------------------------------------------------------------+
+| This target supports Hardware-enforced Stack Protection. A HW based    |
+| "Shadow Stack" may be available to assist in debugging and analysis.   |
+| See aka.ms/userhsp for more info.                                      |
+|                                                                        |
+| dps @ssp                                                               |
+|                                                                        |
++------------------------------------------------------------------------+
+
+ModLoad: 00007ff7`127f0000 00007ff7`12947000   untitled.exe
+ModLoad: 00007ffb`ae5e0000 00007ffb`ae847000   ntdll.dll
+ModLoad: 00007ffb`ad4f0000 00007ffb`ad5b9000   C:\WINDOWS\System32\KERNEL32.DLL
+ModLoad: 00007ffb`aaeb0000 00007ffb`ab2a4000   C:\WINDOWS\System32\KERNELBASE.dll
+ModLoad: 00007ffb`ac960000 00007ffb`ad0c7000   C:\WINDOWS\System32\SHELL32.dll
+ModLoad: 00007ffb`ac2c0000 00007ffb`ac363000   C:\WINDOWS\System32\msvcp_win.dll
+ModLoad: 00007ffb`ab3e0000 00007ffb`ab52b000   C:\WINDOWS\System32\ucrtbase.dll
+ModLoad: 00007ffb`ac370000 00007ffb`ac535000   C:\WINDOWS\System32\USER32.dll
+ModLoad: 00007ffb`ab6a0000 00007ffb`ab6c7000   C:\WINDOWS\System32\win32u.dll
+ModLoad: 00007ffb`adc80000 00007ffb`adcab000   C:\WINDOWS\System32\GDI32.dll
+ModLoad: 00007ffb`ab2b0000 00007ffb`ab3db000   C:\WINDOWS\System32\gdi32full.dll
+ModLoad: 00007ffb`ab530000 00007ffb`ab69a000   C:\WINDOWS\System32\wintypes.dll
+ModLoad: 00007ffb`adf60000 00007ffb`ae2e2000   C:\WINDOWS\System32\combase.dll
+ModLoad: 00007ffb`ac820000 00007ffb`ac938000   C:\WINDOWS\System32\RPCRT4.dll
+ModLoad: 00007ffb`08180000 00007ffb`09272000   D:\GitHub\vcpkg\packages\ffmpeg_x64-windows\bin\avutil-60.dll
+ModLoad: 00007ffb`35380000 00007ffb`35588000   D:\GitHub\vcpkg\packages\abseil_x64-windows\bin\abseil_dll.dll
+ModLoad: 00007ffb`05be0000 00007ffb`066ab000   D:\GitHub\vcpkg\packages\protobuf_x64-windows\bin\libprotobuf.dll
+ModLoad: 00007ffb`ae2f0000 00007ffb`ae3a6000   C:\WINDOWS\System32\ADVAPI32.dll
+ModLoad: 00007ffb`ac540000 00007ffb`ac5e9000   C:\WINDOWS\System32\msvcrt.dll
+ModLoad: 00007ffb`35280000 00007ffb`3537b000   D:\GitHub\vcpkg\packages\ffmpeg_x64-windows\bin\swscale-9.dll
+ModLoad: 00007ffb`adcb0000 00007ffb`add57000   C:\WINDOWS\System32\sechost.dll
+ModLoad: 00007ffb`79020000 00007ffb`79045000   D:\Qt\6.8.2\msvc2022_64\bin\Qt6Qmqtt.dll
+ModLoad: 00007ffb`74040000 00007ffb`74069000   D:\Qt\6.8.2\msvc2022_64\bin\Qt6OpenGLWidgetsd.dll
+ModLoad: 00007ffb`349c0000 00007ffb`34e58000   D:\Qt\6.8.2\msvc2022_64\bin\Qt6OpenGLd.dll
+ModLoad: 00007ffb`048b0000 00007ffb`05bda000   D:\GitHub\vcpkg\packages\ffmpeg_x64-windows\bin\avcodec-62.dll
+ModLoad: 00007ffb`addc0000 00007ffb`adf57000   C:\WINDOWS\System32\ole32.dll
+ModLoad: 00007ffa`dbbf0000 00007ffa`dcc12000   D:\Qt\6.8.2\msvc2022_64\bin\Qt6Widgetsd.dll
+ModLoad: 00007ffb`07c60000 00007ffb`08177000   D:\Qt\6.8.2\msvc2022_64\bin\Qt6Networkd.dll
+ModLoad: 00007ffb`adbe0000 00007ffb`adc60000   C:\WINDOWS\System32\WS2_32.dll
+ModLoad: 00007ffb`348d0000 00007ffb`349b1000   C:\WINDOWS\SYSTEM32\MSVCP140D.dll
+ModLoad: 00007ffa`d97a0000 00007ffa`db111000   D:\Qt\6.8.2\msvc2022_64\bin\Qt6Guid.dll
+ModLoad: 00007ffb`8ece0000 00007ffb`8ecef000   C:\WINDOWS\SYSTEM32\VCRUNTIME140_1D.dll
+ModLoad: 00007ffb`73fe0000 00007ffb`74010000   C:\WINDOWS\SYSTEM32\VCRUNTIME140D.dll
+ModLoad: 00007ffa`c9550000 00007ffa`ca51d000   D:\Qt\6.8.2\msvc2022_64\bin\Qt6Cored.dll
+ModLoad: 00007ffb`346c0000 00007ffb`348c4000   C:\WINDOWS\SYSTEM32\ucrtbased.dll
+ModLoad: 00007ffb`ad410000 00007ffb`ad4e8000   C:\WINDOWS\System32\OLEAUT32.dll
+ModLoad: 00007ffb`899b0000 00007ffb`899ce000   C:\WINDOWS\SYSTEM32\VCRUNTIME140.dll
+ModLoad: 00007ffb`aada0000 00007ffb`aadca000   C:\WINDOWS\SYSTEM32\bcrypt.dll
+ModLoad: 00007ffb`89920000 00007ffb`899a9000   C:\WINDOWS\SYSTEM32\MSVCP140.dll
+ModLoad: 00007ffb`8dbf0000 00007ffb`8dbfc000   C:\WINDOWS\SYSTEM32\VCRUNTIME140_1.dll
+ModLoad: 00007ffb`a8c10000 00007ffb`a8e52000   C:\WINDOWS\SYSTEM32\dbghelp.dll
+ModLoad: 0000020b`7f5c0000 0000020b`7f5cc000   C:\WINDOWS\SYSTEM32\VCRUNTIME140_1.dll
+ModLoad: 00007ffb`31170000 00007ffb`31320000   D:\Qt\6.8.2\msvc2022_64\bin\Qt6Network.dll
+ModLoad: 00007ffa`dd100000 00007ffa`dd6d7000   D:\Qt\6.8.2\msvc2022_64\bin\Qt6Core.dll
+ModLoad: 00007ffb`a8660000 00007ffb`a8709000   C:\WINDOWS\SYSTEM32\UxTheme.dll
+ModLoad: 00007ffb`a88f0000 00007ffb`a891f000   C:\WINDOWS\SYSTEM32\dwmapi.dll
+ModLoad: 00007ffb`8b300000 00007ffb`8b30a000   C:\WINDOWS\SYSTEM32\MSVCP140_1D.dll
+ModLoad: 00007ffb`70b00000 00007ffb`70b22000   D:\GitHub\vcpkg\packages\ffmpeg_x64-windows\bin\swresample-6.dll
+ModLoad: 00007ffb`a9730000 00007ffb`a9862000   C:\WINDOWS\SYSTEM32\DNSAPI.dll
+ModLoad: 00007ffb`a96f0000 00007ffb`a9722000   C:\WINDOWS\SYSTEM32\IPHLPAPI.DLL
+ModLoad: 00007ffb`a8170000 00007ffb`a817d000   C:\WINDOWS\SYSTEM32\Secur32.dll
+ModLoad: 00007ffb`a5030000 00007ffb`a515d000   C:\WINDOWS\SYSTEM32\WINHTTP.dll
+ModLoad: 00007ffb`a8780000 00007ffb`a88c1000   C:\WINDOWS\SYSTEM32\dxgi.dll
+ModLoad: 00007ffb`a66b0000 00007ffb`a6913000   C:\WINDOWS\SYSTEM32\d3d11.dll
+ModLoad: 00007ffb`8b760000 00007ffb`8b783000   C:\WINDOWS\SYSTEM32\d3d12.dll
+ModLoad: 00007ffb`a5e00000 00007ffb`a6067000   C:\WINDOWS\SYSTEM32\DWrite.dll
+ModLoad: 00007ffb`37f10000 00007ffb`37f81000   C:\WINDOWS\SYSTEM32\MSVCP140_2D.dll
+ModLoad: 00007ffb`984f0000 00007ffb`98511000   C:\WINDOWS\SYSTEM32\MPR.dll
+ModLoad: 00007ffb`aa260000 00007ffb`aa293000   C:\WINDOWS\SYSTEM32\USERENV.dll
+ModLoad: 00007ffb`a9690000 00007ffb`a96e0000   C:\WINDOWS\SYSTEM32\AUTHZ.dll
+ModLoad: 00007ffb`88b70000 00007ffb`88b8a000   C:\WINDOWS\SYSTEM32\NETAPI32.dll
+ModLoad: 00007ffb`99e00000 00007ffb`99e0b000   C:\WINDOWS\SYSTEM32\VERSION.dll
+ModLoad: 00007ffb`a2c80000 00007ffb`a2cb6000   C:\WINDOWS\SYSTEM32\WINMM.dll
+ModLoad: 00007ffb`8d6d0000 00007ffb`8d6d9000   C:\WINDOWS\SYSTEM32\MSVCP140_1.dll
+ModLoad: 00007ffb`aad10000 00007ffb`aad6e000   C:\WINDOWS\SYSTEM32\powrprof.dll
+ModLoad: 00007ffb`a9ee0000 00007ffb`a9f29000   C:\WINDOWS\SYSTEM32\SSPICLI.DLL
+ModLoad: 00007ffb`aa4b0000 00007ffb`aa4bc000   C:\WINDOWS\SYSTEM32\CRYPTBASE.DLL
+ModLoad: 0000020b`7f630000 0000020b`7f63c000   C:\WINDOWS\SYSTEM32\CRYPTBASE.DLL
+ModLoad: 0000020b`7f5e0000 0000020b`7f629000   C:\WINDOWS\SYSTEM32\SSPICLI.DLL
+ModLoad: 00007ffb`96ea0000 00007ffb`96ec9000   C:\WINDOWS\SYSTEM32\SRVCLI.DLL
+ModLoad: 00007ffb`a95e0000 00007ffb`a95ed000   C:\WINDOWS\SYSTEM32\NETUTILS.DLL
+(6588.7d90): Break instruction exception - code 80000003 (first chance)
+ntdll!LdrpDoDebuggerBreak+0x35:
+00007ffb`ae6ff56d cc              int     3
+0:000> symfix
+Couldn't resolve error at 'ymfix'
+0:000> !sym noisy
+noisy mode - symbol prompts off
+0:000> .reload
+Reloading current modules
+................................................................
+....
+SYMSRV:  BYINDEX: 0x2
+         C:\ProgramData\dbg\sym
+         ntdll.pdb
+         4FE96AFC99BB2AEBCC1F4B164354A6F51
+SYMSRV:  PATH: C:\ProgramData\dbg\sym\ntdll.pdb\4FE96AFC99BB2AEBCC1F4B164354A6F51\ntdll.pdb
+SYMSRV:  RESULT: 0x00000000
+DBGHELP: ntdll - public symbols  
+        C:\ProgramData\dbg\sym\ntdll.pdb\4FE96AFC99BB2AEBCC1F4B164354A6F51\ntdll.pdb
+
+
+************* Symbol Loading Error Summary **************
+Module name            Error
+SharedUserData         No error - symbol load deferred
+				Symbol loading has been deferred because this symbol is not needed
+				at this time. Use reload /f to force load symbols.
+
+0:000> sxe av
+0:000> g
+ModLoad: 00007ffb`ad710000 00007ffb`ad742000   C:\WINDOWS\System32\IMM32.DLL
+ModLoad: 00007ffb`ab6d0000 00007ffb`ab775000   C:\WINDOWS\System32\bcryptPrimitives.dll
+ModLoad: 00007ffb`ad1d0000 00007ffb`ad1da000   C:\WINDOWS\System32\NSI.dll
+ModLoad: 00007ffb`aacf0000 00007ffb`aad04000   C:\WINDOWS\SYSTEM32\UMPDC.dll
+ModLoad: 00007ffb`ab8d0000 00007ffb`ac138000   C:\WINDOWS\System32\windows.storage.dll
+ModLoad: 00007ffb`ad0d0000 00007ffb`ad1c8000   C:\WINDOWS\System32\SHCORE.dll
+ModLoad: 00007ffb`ac5f0000 00007ffb`ac656000   C:\WINDOWS\System32\shlwapi.dll
+ModLoad: 00007ffb`aadd0000 00007ffb`aadf9000   C:\WINDOWS\SYSTEM32\profapi.dll
+ModLoad: 00007ffb`07060000 00007ffb`073ec000   D:\Qt\6.8.2\msvc2022_64\plugins\platforms\qwindowsd.dll
+ModLoad: 00007ffb`ad750000 00007ffb`adbd7000   C:\WINDOWS\System32\SETUPAPI.dll
+ModLoad: 00007ffb`ac720000 00007ffb`ac80f000   C:\WINDOWS\System32\COMDLG32.dll
+ModLoad: 00007ffb`a8300000 00007ffb`a8329000   C:\WINDOWS\SYSTEM32\WTSAPI32.dll
+ModLoad: 00007ffb`835b0000 00007ffb`83843000   C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.26100.8115_none_3e075c82e3354f9c\COMCTL32.dll
+ModLoad: 00007ffb`ac140000 00007ffb`ac2b7000   C:\WINDOWS\System32\CRYPT32.dll
+ModLoad: 00007ffb`7edc0000 00007ffb`7f1e0000   C:\WINDOWS\SYSTEM32\UIAutomationCore.DLL
+ModLoad: 00007ffb`8ac80000 00007ffb`8ae32000   C:\WINDOWS\SYSTEM32\d3d9.dll
+ModLoad: 00007ffb`a8710000 00007ffb`a8753000   C:\WINDOWS\SYSTEM32\dxcore.dll
+ModLoad: 00007ffb`a9c40000 00007ffb`a9c5b000   C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+ModLoad: 00007ffb`ae430000 00007ffb`ae58c000   C:\WINDOWS\System32\MSCTF.dll
+ModLoad: 00007ffb`aaa50000 00007ffb`aaa7d000   C:\WINDOWS\SYSTEM32\DEVOBJ.dll
+ModLoad: 00007ffb`aa9f0000 00007ffb`aaa41000   C:\WINDOWS\SYSTEM32\cfgmgr32.dll
+ModLoad: 0000020b`01610000 0000020b`01661000   C:\WINDOWS\SYSTEM32\cfgmgr32.dll
+ModLoad: 0000020b`015b0000 0000020b`01601000   C:\WINDOWS\SYSTEM32\CFGMGR32.dll
+ModLoad: 00007ffb`ab780000 00007ffb`ab802000   C:\WINDOWS\System32\WINTRUST.dll
+ModLoad: 00007ffb`aa500000 00007ffb`aa513000   C:\WINDOWS\SYSTEM32\MSASN1.dll
+ModLoad: 00007ffb`ad5c0000 00007ffb`ad66e000   C:\WINDOWS\System32\clbcatq.dll
+ModLoad: 00007ffb`88c50000 00007ffb`88da9000   C:\Windows\System32\Windows.UI.dll
+ModLoad: 00007ffb`84220000 00007ffb`8436f000   C:\Windows\System32\Windows.UI.Immersive.dll
+ModLoad: 00007ffb`310c0000 00007ffb`31168000   D:\Qt\6.8.2\msvc2022_64\plugins\styles\qmodernwindowsstyled.dll
+QObject: Cannot create children for a parent that is in a different thread.
+(Parent is Widget(0xe1ab4ffc00), parent's thread is QThread(0x20b7f448f80), current thread is QThread(0x20b7f4dea90)
+ModLoad: 00007ffb`a4800000 00007ffb`a481d000   C:\WINDOWS\SYSTEM32\dhcpcsvc6.DLL
+ModLoad: 00007ffb`a3ad0000 00007ffb`a3af5000   C:\WINDOWS\SYSTEM32\dhcpcsvc.DLL
+ModLoad: 00007ffb`aa1b0000 00007ffb`aa21c000   C:\WINDOWS\system32\mswsock.dll
+ModLoad: 00007ffb`8a9e0000 00007ffb`8ac7f000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igdumdim64.dll
+ModLoad: 00007ffb`126f0000 00007ffb`1438d000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igd9trinity64.dll
+ModLoad: 00007ffb`a06e0000 00007ffb`a0c8b000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igdgmm64.dll
+ModLoad: 00007ffb`9b420000 00007ffb`a06d4000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igc64.dll
+ModLoad: 00007ffb`8a990000 00007ffb`8a9de000   C:\WINDOWS\SYSTEM32\ControlLib.dll
+ModLoad: 00007ffb`74410000 00007ffb`744c2000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\IntelControlLib.dll
+ModLoad: 00007ffb`a8fc0000 00007ffb`a8fd4000   C:\WINDOWS\SYSTEM32\resourcepolicyclient.dll
+ModLoad: 00007ffb`a3da0000 00007ffb`a3e01000   C:\WINDOWS\SYSTEM32\directxdatabasehelper.dll
+ModLoad: 00007ffb`10f80000 00007ffb`126eb000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igd9dxva64.dll
+ModLoad: 00007ffb`90ef0000 00007ffb`92fc3000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\media_bin_64.dll
+ModLoad: 00007ffb`a8fc0000 00007ffb`a8fd4000   C:\WINDOWS\SYSTEM32\resourcepolicyclient.dll
+ModLoad: 00007ffb`73f60000 00007ffb`73fba000   C:\WINDOWS\system32\dataexchange.dll
+ModLoad: 00007ffb`9ac00000 00007ffb`9ae4d000   C:\WINDOWS\system32\twinapi.appcore.dll
+ModLoad: 00007ffb`8a9e0000 00007ffb`8ac7f000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igdumdim64.dll
+ModLoad: 00007ffb`126f0000 00007ffb`1438d000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igd9trinity64.dll
+ModLoad: 00007ffb`a06e0000 00007ffb`a0c8b000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igdgmm64.dll
+ModLoad: 00007ffb`9b420000 00007ffb`a06d4000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igc64.dll
+ModLoad: 00007ffb`8a990000 00007ffb`8a9de000   C:\WINDOWS\SYSTEM32\ControlLib.dll
+ModLoad: 00007ffb`74410000 00007ffb`744c2000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\IntelControlLib.dll
+ModLoad: 00007ffb`10f80000 00007ffb`126eb000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igd9dxva64.dll
+ModLoad: 00007ffb`90ef0000 00007ffb`92fc3000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\media_bin_64.dll
+ModLoad: 00007ffb`22200000 00007ffb`2230f000   C:\WINDOWS\SYSTEM32\opengl32.DLL
+ModLoad: 00007ffb`221d0000 00007ffb`221fd000   C:\WINDOWS\SYSTEM32\GLU32.dll
+ModLoad: 00007ffb`90dc0000 00007ffb`90ddd000   C:\WINDOWS\SYSTEM32\windows.staterepositorycore.dll
+ModLoad: 00007ffa`e9240000 00007ffa`ea6ac000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igxelpicd64.dll
+ModLoad: 00007ffb`6e1a0000 00007ffb`6e341000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igdml64.dll
+ModLoad: 00007ffb`a06e0000 00007ffb`a0c8b000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igdgmm64.dll
+ModLoad: 00007ffb`a06e0000 00007ffb`a0c8b000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igdgmm64.dll
+ModLoad: 00007ffb`8a990000 00007ffb`8a9de000   C:\WINDOWS\SYSTEM32\ControlLib.dll
+ModLoad: 00007ffb`74410000 00007ffb`744c2000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\IntelControlLib.dll
+ModLoad: 00007ffb`9b420000 00007ffb`a06d4000   C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igc64.dll
+ModLoad: 00007ffb`84e50000 00007ffb`84f98000   C:\WINDOWS\SYSTEM32\textinputframework.dll
+(6588.7e9c): Access violation - code c0000005 (first chance)
+First chance exceptions are reported before any exception handling.
+This exception may be expected and handled.
+SYMSRV:  BYINDEX: 0x3
+         C:\ProgramData\dbg\sym
+         avcodec-62.pdb
+         B584E5CB493A48B98977C23F0117228A1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\avcodec-62.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\avcodec-62.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0x4
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         avcodec-62.pdb
+         B584E5CB493A48B98977C23F0117228A1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\avcodec-62.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\avcodec-62.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\file.ptr - path not found
+SYMSRV:  WININET: PROXY: 127.0.0.1:7890
+SYMSRV:  HTTPGET: /download/symbols/index2.txt
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/avcodec-62.pdb/B584E5CB493A48B98977C23F0117228A1/avcodec-62.pdb
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/avcodec-62.pdb/B584E5CB493A48B98977C23F0117228A1/avcodec-62.pd_
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/avcodec-62.pdb/B584E5CB493A48B98977C23F0117228A1/file.ptr
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  RESULT: 0x80190194
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\avcodec-62.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\avcodec-62.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\avcodec-62.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\avcodec-62.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\file.ptr - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\file.ptr - path not found
+DBGHELP: D:\GitHub\vcpkg\packages\ffmpeg_x64-windows\bin\avcodec-62.pdb cached to C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\avcodec-62.pdb
+*** WARNING: Unable to verify checksum for D:\GitHub\vcpkg\packages\ffmpeg_x64-windows\bin\avcodec-62.dll
+DBGHELP: avcodec_62 - private symbols & lines 
+        C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\avcodec-62.pdb
+00000000`00000000 ??              ???
+0:007> .echo ====EXCEPTION====
+====EXCEPTION====
+0:007> .exr -1
+ExceptionAddress: 0000000000000000
+   ExceptionCode: c0000005 (Access violation)
+  ExceptionFlags: 00000000
+NumberParameters: 2
+   Parameter[0]: 0000000000000008
+   Parameter[1]: 0000000000000000
+Attempt to execute non-executable address 0000000000000000
+0:007> .ecxr
+Unable to get exception context, HRESULT 0x8000FFFF
+0:007> kb
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`04b88eaf     : 000000e1`abbfa6b0 000000e1`abbfa6c4 0000020b`015f2ea8 00007ffb`04d9d1ae : 0x0
+00007ffb`04d9d696     : 0000020b`015f00c0 0000020b`083dcf80 0000020b`015f00e0 0000020b`015f00e0 : avcodec_62!ff_get_format+0xef
+00007ffb`04d9da96     : 0000020b`015f00c0 0000020b`015f00e0 0000020b`015f00c0 00000000`00000000 : avcodec_62!get_format+0x126
+00007ffb`04d9cf72     : 0000020b`00000001 0000020b`00000cb1 0000020b`00000004 0000020b`00000000 : avcodec_62!hevc_frame_start+0x216
+00007ffb`04d9c866     : 0000020b`015f00c0 00000000`00000160 00000000`00000004 0000020b`083da0e0 : avcodec_62!decode_slice+0x182
+00007ffb`04d9cb9d     : 0000020b`015f00c0 00000000`00000000 00000000`00000000 0000020b`7f4d11c0 : avcodec_62!decode_nal_unit+0x196
+00007ffb`04d9af12     : 00000000`00000000 00000000`dfb9b0bb 0000020b`015f00c0 00007ffb`081d3c9b : avcodec_62!decode_nal_units+0x27d
+00007ffb`04b86d61     : 00000000`00000000 0000020b`0169f0c0 0000020b`0169ef40 00007ffb`081b0e8a : avcodec_62!hevc_receive_frame+0x1b2
+(Inline Function)     : --------`-------- --------`-------- --------`-------- --------`-------- : avcodec_62!ff_decode_receive_frame_internal+0x77
+00007ffb`04b86a82     : 0000020b`7f4dde40 0000020b`7f4dde40 00000000`00000000 0000020b`7f4d11c0 : avcodec_62!decode_receive_frame_internal+0xb1
+SYMSRV:  BYINDEX: 0x5
+         C:\ProgramData\dbg\sym
+         untitled.pdb
+         159B65E220C540369ABD384BF9CF56FC1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\untitled.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\untitled.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0x6
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         untitled.pdb
+         159B65E220C540369ABD384BF9CF56FC1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\untitled.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\untitled.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\file.ptr - path not found
+SYMSRV:  HTTPGET: /download/symbols/untitled.pdb/159B65E220C540369ABD384BF9CF56FC1/untitled.pdb
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/untitled.pdb/159B65E220C540369ABD384BF9CF56FC1/untitled.pd_
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/untitled.pdb/159B65E220C540369ABD384BF9CF56FC1/file.ptr
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  RESULT: 0x80190194
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\untitled.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\untitled.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\untitled.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\untitled.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\file.ptr - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\file.ptr - path not found
+DBGHELP: C:\Users\24981\Desktop\UI\video\build\Desktop_Qt_6_8_2_MSVC2022_64bit-Debug\debug\untitled.pdb cached to C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\untitled.pdb
+*** WARNING: Unable to verify checksum for untitled.exe
+DBGHELP: untitled - private symbols & lines 
+        C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\untitled.pdb
+00007ff7`128415a6     : 00000000`00000000 000000e1`abbff8a0 0000020b`083bfc40 000000e1`abbfb120 : avcodec_62!avcodec_send_packet+0xf2
+00007ff7`128730b0     : 0000020b`7f4d05f0 000000e1`abbfadb8 0000019d`b07a5801 0000019d`b07a5802 : untitled!MyDecoder::Decode+0x246
+00007ff7`1286fee8     : 000000e1`abbfae40 00000000`00000000 00000000`00000000 00000000`00000000 : untitled!`QtPrivate::FunctorCall<QtPrivate::IndexesList<0,1,2>,QtPrivate::List<QByteArray,__int64,__int64>,void,void (__cdecl MyDecoder::*)(QByteArray,__int64,__int64)>::call'::`2'::<lambda_1>::operator()+0xd0
+00007ff7`12874275     : 0000020b`083dd1d0 000000e1`abbfae40 000000e1`abbfae70 000000e1`abbfae80 : untitled!QtPrivate::FunctorCallBase::call_internal<void,`QtPrivate::FunctorCall<QtPrivate::IndexesList<0,1,2>,QtPrivate::List<QByteArray,__int64,__int64>,void,void (__cdecl MyDecoder::*)(QByteArray,__int64,__int64)>::call'::`2'::<lambda_1> >+0x18
+00007ff7`1286fe27     : 00007ff7`127f50b0 0000020b`7f4d05f0 0000020b`083dd1d0 00000000`00000000 : untitled!QtPrivate::FunctorCall<QtPrivate::IndexesList<0,1,2>,QtPrivate::List<QByteArray,__int64,__int64>,void,void (__cdecl MyDecoder::*)(QByteArray,__int64,__int64)>::call+0x55
+00007ff7`128759b9     : 00007ff7`127f50b0 0000020b`7f4d05f0 0000020b`083dd1d0 00000000`00000000 : untitled!QtPrivate::FunctionPointer<void (__cdecl MyDecoder::*)(QByteArray,__int64,__int64)>::call<QtPrivate::List<QByteArray,__int64,__int64>,void>+0x27
+SYMSRV:  BYINDEX: 0x7
+         C:\ProgramData\dbg\sym
+         Qt6Cored.pdb
+         B1BEB22A9D00492180777D7870FD0F071
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Cored.pdb\B1BEB22A9D00492180777D7870FD0F071\Qt6Cored.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Cored.pdb\B1BEB22A9D00492180777D7870FD0F071\Qt6Cored.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Cored.pdb\B1BEB22A9D00492180777D7870FD0F071\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0x8
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         Qt6Cored.pdb
+         B1BEB22A9D00492180777D7870FD0F071
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Cored.pdb\B1BEB22A9D00492180777D7870FD0F071\Qt6Cored.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Cored.pdb\B1BEB22A9D00492180777D7870FD0F071\Qt6Cored.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Cored.pdb\B1BEB22A9D00492180777D7870FD0F071\file.ptr - path not found
+SYMSRV:  HTTPGET: /download/symbols/Qt6Cored.pdb/B1BEB22A9D00492180777D7870FD0F071/Qt6Cored.pdb
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/Qt6Cored.pdb/B1BEB22A9D00492180777D7870FD0F071/Qt6Cored.pd_
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/Qt6Cored.pdb/B1BEB22A9D00492180777D7870FD0F071/file.ptr
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  RESULT: 0x80190194
+DBGHELP: D:\Qt\6.8.2\msvc2022_64\bin\Qt6Cored.pdb - file not found
+DBGHELP: C:\Users\qt\work\qt\qtbase_build\bin\Qt6Cored.pdb - file not found
+DBGHELP: Qt6Cored - export symbols
+00007ffa`c9776f43     : cccccccc`00000001 0000020b`7f4edc40 0000020b`7f4d05f0 0000020b`083dd1d0 : untitled!QtPrivate::QCallableObject<void (__cdecl MyDecoder::*)(QByteArray,__int64,__int64),QtPrivate::List<QByteArray,__int64,__int64>,void>::impl+0x99
+00007ffa`c9826d9f     : 0000020b`7f4edc40 0000020b`7f4d05f0 0000020b`083dd1d0 00007ffa`c9bcec5d : Qt6Cored!QFileInfo::filePath+0x1f09dd
+00007ffa`c981db2a     : 0000020b`083dc8c0 0000020b`7f4d05f0 0000020b`7f4cfd20 00007ffa`00000004 : Qt6Cored!QFileInfo::filePath+0x2a0839
+SYMSRV:  BYINDEX: 0x9
+         C:\ProgramData\dbg\sym
+         Qt6Widgetsd.pdb
+         741A9A95FAA74D5BB13A68F3665F43581
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Widgetsd.pdb\741A9A95FAA74D5BB13A68F3665F43581\Qt6Widgetsd.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Widgetsd.pdb\741A9A95FAA74D5BB13A68F3665F43581\Qt6Widgetsd.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Widgetsd.pdb\741A9A95FAA74D5BB13A68F3665F43581\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0xA
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         Qt6Widgetsd.pdb
+         741A9A95FAA74D5BB13A68F3665F43581
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Widgetsd.pdb\741A9A95FAA74D5BB13A68F3665F43581\Qt6Widgetsd.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Widgetsd.pdb\741A9A95FAA74D5BB13A68F3665F43581\Qt6Widgetsd.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Widgetsd.pdb\741A9A95FAA74D5BB13A68F3665F43581\file.ptr - path not found
+SYMSRV:  HTTPGET: /download/symbols/Qt6Widgetsd.pdb/741A9A95FAA74D5BB13A68F3665F43581/Qt6Widgetsd.pdb
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/Qt6Widgetsd.pdb/741A9A95FAA74D5BB13A68F3665F43581/Qt6Widgetsd.pd_
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/Qt6Widgetsd.pdb/741A9A95FAA74D5BB13A68F3665F43581/file.ptr
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  RESULT: 0x80190194
+DBGHELP: D:\Qt\6.8.2\msvc2022_64\bin\Qt6Widgetsd.pdb - file not found
+DBGHELP: C:\Users\qt\work\qt\qtbase_build\bin\Qt6Widgetsd.pdb - file not found
+DBGHELP: Qt6Widgetsd - export symbols
+00007ffa`dbc661eb     : 0000020b`7f4d05f0 0000020b`083dc8c0 00000000`00000000 00000000`00000000 : Qt6Cored!QFileInfo::filePath+0x2975c4
+00007ffa`dbc6361b     : 0000020b`7f45f640 0000020b`7f4d05f0 0000020b`083dc8c0 00000000`00000000 : Qt6Widgetsd!QLineEdit::`default constructor closure'+0x36545
+00007ffa`c9765244     : 000000e1`ab4ffbe8 0000020b`7f4d05f0 0000020b`083dc8c0 00000000`00000000 : Qt6Widgetsd!QLineEdit::`default constructor closure'+0x33975
+00007ffa`c976277b     : 0000020b`7f4d05f0 0000020b`083dc8c0 cccccccc`00000001 cccccccc`cccccccc : Qt6Cored!QFileInfo::filePath+0x1decde
+00007ffa`c97678a8     : 0000020b`7f4d05f0 0000020b`083dc8c0 cccccccc`00000000 0000020b`7f4cfc20 : Qt6Cored!QFileInfo::filePath+0x1dc215
+00007ffa`c9bb6c6f     : 00000000`00000000 00007ffa`00000000 0000020b`7f4cfc20 00007ffa`ca034220 : Qt6Cored!QFileInfo::filePath+0x1e1342
+00007ffa`c9bb4f7f     : 0000020b`7f5085f0 00000000`00000000 00000000`00000000 00000000`00000000 : Qt6Cored!QFileInfo::filePath+0x630709
+00007ffa`c978365c     : 0000020b`7f5085f0 00007ffa`00000024 000000e1`abbff6d0 00007ffa`00000024 : Qt6Cored!QFileInfo::filePath+0x62ea19
+00007ffa`c9783964     : 000000e1`abbff768 000000e1`00000024 000000e1`00000020 0000020b`00000000 : Qt6Cored!QFileInfo::filePath+0x1fd0f6
+00007ffa`c99c5673     : 000000e1`abbff768 00000000`00000000 000000e1`abbff7e0 00007ffa`c962f55f : Qt6Cored!QFileInfo::filePath+0x1fd3fe
+00007ffa`c99c5534     : 0000020b`7f4e24f0 cccccccc`cccccccc cccccccc`cccccccc cccccccc`cccccccc : Qt6Cored!QFileInfo::filePath+0x43f10d
+00007ffa`c9bcdf90     : 0000020b`7f4e24f0 000000e1`abbff8cc 000000e1`abbff878 00000000`00000000 : Qt6Cored!QFileInfo::filePath+0x43efce
+SYMSRV:  BYINDEX: 0xB
+         C:\ProgramData\dbg\sym
+         kernel32.pdb
+         3793FC137439CF05281960D0AC2979DC1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\kernel32.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\kernel32.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0xC
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         kernel32.pdb
+         3793FC137439CF05281960D0AC2979DC1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\kernel32.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\kernel32.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\file.ptr - path not found
+SYMSRV:  HTTPGET: /download/symbols/kernel32.pdb/3793FC137439CF05281960D0AC2979DC1/kernel32.pdb
+SYMSRV:  HttpQueryInfo: 801900c8 - HTTP_STATUS_OK
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\kernel32.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\kernel32.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\file.ptr - path not found
+SYMSRV:  kernel32.pdb from https://msdl.microsoft.com/download/symbols: 1044480 bytes -                0 percent   0 percent  70 percent copied      
+SYMSRV:  PATH: C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\kernel32.pdb
+SYMSRV:  RESULT: 0x00000000
+DBGHELP: C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\kernel32.pdb cached to C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\kernel32.pdb
+DBGHELP: KERNEL32 - public symbols  
+        C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\kernel32.pdb
+00007ffb`ad51e8d7     : 0000020b`7f4e24f0 00000000`00000000 00000000`00000000 00000000`00000000 : Qt6Cored!QFileInfo::filePath+0x647a2a
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+0:007> ~* kb
+
+   0  Id: 6588.7d90 Suspend: 1 Teb: 000000e1`ab2bf000 Unfrozen
+SYMSRV:  BYINDEX: 0xD
+         C:\ProgramData\dbg\sym
+         win32u.pdb
+         AD5C7A53399F01EF9A51D20899BA03FD1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\win32u.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\win32u.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0xE
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         win32u.pdb
+         AD5C7A53399F01EF9A51D20899BA03FD1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\win32u.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\win32u.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\file.ptr - path not found
+SYMSRV:  HTTPGET: /download/symbols/win32u.pdb/AD5C7A53399F01EF9A51D20899BA03FD1/win32u.pdb
+SYMSRV:  HttpQueryInfo: 801900c8 - HTTP_STATUS_OK
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\win32u.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\win32u.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\file.ptr - path not found
+SYMSRV:  win32u.pdb from https://msdl.microsoft.com/download/symbols: 274432 bytes -                0 percent   1 percent copied      
+SYMSRV:  PATH: C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\win32u.pdb
+SYMSRV:  RESULT: 0x00000000
+DBGHELP: C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\win32u.pdb cached to C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\win32u.pdb
+DBGHELP: win32u - public symbols  
+        C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\win32u.pdb
+RetAddr               : Args to Child                                                           : Call Site
+00007ffa`c9bb5569     : 0000020b`7f497e90 00000000`00000004 00000000`00000000 00000000`00000000 : win32u!NtUserMsgWaitForMultipleObjectsEx+0x14
+SYMSRV:  BYINDEX: 0xF
+         C:\ProgramData\dbg\sym
+         Qt6Guid.pdb
+         D315873111A5477DBC052FA64F96755F1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Guid.pdb\D315873111A5477DBC052FA64F96755F1\Qt6Guid.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Guid.pdb\D315873111A5477DBC052FA64F96755F1\Qt6Guid.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Guid.pdb\D315873111A5477DBC052FA64F96755F1\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0x10
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         Qt6Guid.pdb
+         D315873111A5477DBC052FA64F96755F1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Guid.pdb\D315873111A5477DBC052FA64F96755F1\Qt6Guid.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Guid.pdb\D315873111A5477DBC052FA64F96755F1\Qt6Guid.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\Qt6Guid.pdb\D315873111A5477DBC052FA64F96755F1\file.ptr - path not found
+SYMSRV:  HTTPGET: /download/symbols/Qt6Guid.pdb/D315873111A5477DBC052FA64F96755F1/Qt6Guid.pdb
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/Qt6Guid.pdb/D315873111A5477DBC052FA64F96755F1/Qt6Guid.pd_
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/Qt6Guid.pdb/D315873111A5477DBC052FA64F96755F1/file.ptr
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  RESULT: 0x80190194
+DBGHELP: D:\Qt\6.8.2\msvc2022_64\bin\Qt6Guid.pdb - file not found
+DBGHELP: C:\Users\qt\work\qt\qtbase_build\bin\Qt6Guid.pdb - file not found
+DBGHELP: Qt6Guid - export symbols
+00007ffa`da1a4e6b     : 0000020b`7f497e90 00007ffa`000000a4 000000e1`ab4ffa70 00007ffa`c9752177 : Qt6Cored!QFileInfo::filePath+0x62f003
+00007ffa`c978365c     : 0000020b`7f497e90 00007ffa`000000a4 000000e1`ab4ffa50 00007ffa`000000a4 : Qt6Guid!QColorSpace::isValidTarget+0x9aa4e2
+00007ffa`c9783964     : 000000e1`ab4ffab8 000000e1`000000a4 000000e1`00000020 0000020b`00000000 : Qt6Cored!QFileInfo::filePath+0x1fd0f6
+00007ffa`c976250a     : 000000e1`ab4ffab8 00000000`00000080 cccccccc`00000001 cccccccc`cccccccc : Qt6Cored!QFileInfo::filePath+0x1fd3fe
+00007ffa`d9993eda     : 000000e1`ab4ffbe8 00007ff7`8800f001 00007ffa`00000000 00007ff7`127f4179 : Qt6Cored!QFileInfo::filePath+0x1dbfa4
+00007ffa`dbc602ac     : 00007ff7`127f2824 00007ffb`07210179 00007ff7`1287b109 000000e1`ab4ffde0 : Qt6Guid!QColorSpace::isValidTarget+0x199551
+00007ff7`12845383     : 000000e1`ab4ffc00 00000000`00000000 0000020b`7f460e40 00000000`00060802 : Qt6Widgetsd!QLineEdit::`default constructor closure'+0x30606
+00007ff7`128e052a     : 00007ff7`00000001 0000020b`7f460e40 ffffffff`ffffffff 00007ffb`07d661aa : untitled!main+0x63
+00007ff7`128e03de     : 00000000`00000000 00000000`00000000 00000000`00000000 00180000`00000008 : untitled!qtEntryPoint+0x4a
+00007ff7`128de722     : 00007ff7`127f0000 00000000`00000000 0000020b`7f438f3e 00007ff7`0000000a : untitled!WinMain+0x1e
+00007ff7`128de612     : 00007ff7`128ef000 00007ff7`128ef878 00000000`00000000 00000000`00000000 : untitled!invoke_main+0x32
+00007ff7`128de4ce     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : untitled!__scrt_common_main_seh+0x132
+00007ff7`128de7be     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : untitled!__scrt_common_main+0xe
+00007ffb`ad51e8d7     : 000000e1`ab2be000 00000000`00000000 00000000`00000000 00000000`00000000 : untitled!WinMainCRTStartup+0xe
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+   1  Id: 6588.5b28 Suspend: 1 Teb: 000000e1`ab2c1000 Unfrozen
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`ae655dfe     : 00000000`00000000 00000000`00000000 00007ffb`ae654d60 0000020b`7f43a890 : ntdll!NtWaitForWorkViaWorkerFactory+0x14
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!TppWorkerThread+0x37e
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+   2  Id: 6588.130c Suspend: 1 Teb: 000000e1`ab2c3000 Unfrozen
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`ae655dfe     : 00000000`00000000 00000000`00000000 00007ffb`ae654d60 0000020b`7f43a890 : ntdll!NtWaitForWorkViaWorkerFactory+0x14
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!TppWorkerThread+0x37e
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+   3  Id: 6588.7dc0 Suspend: 1 Teb: 000000e1`ab2c5000 Unfrozen
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`ae655dfe     : 00000000`00000000 00000000`00000000 00007ffb`ae654d60 0000020b`7f43a890 : ntdll!NtWaitForWorkViaWorkerFactory+0x14
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!TppWorkerThread+0x37e
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+   4  Id: 6588.6dbc Suspend: 1 Teb: 000000e1`ab2c7000 Unfrozen
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`ae655dfe     : 00000000`00000002 00000000`00000000 00007ffb`ae657a70 0000020b`7f431b40 : ntdll!NtWaitForWorkViaWorkerFactory+0x14
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!TppWorkerThread+0x37e
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+   5  Id: 6588.7b5c Suspend: 1 Teb: 000000e1`ab2c9000 Unfrozen
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`ae655dfe     : 0000020b`7f431b40 00000000`00000000 00007ffb`ae654d60 0000020b`7f431b40 : ntdll!NtWaitForWorkViaWorkerFactory+0x14
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!TppWorkerThread+0x37e
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+   6  Id: 6588.71c0 Suspend: 1 Teb: 000000e1`ab2cb000 Unfrozen "QThread"
+RetAddr               : Args to Child                                                           : Call Site
+00007ffa`c9bb5569     : 0000020b`7f501760 00000000`00000004 000000e1`abaffae0 00000000`00000000 : win32u!NtUserMsgWaitForMultipleObjectsEx+0x14
+00007ffa`c978365c     : 0000020b`7f501760 00007ffa`00000024 000000e1`abaff910 00007ffa`00000024 : Qt6Cored!QFileInfo::filePath+0x62f003
+00007ffa`c9783964     : 000000e1`abaff9a8 000000e1`00000024 000000e1`00000020 0000020b`00000000 : Qt6Cored!QFileInfo::filePath+0x1fd0f6
+00007ffa`c99c5673     : 000000e1`abaff9a8 00000000`00000000 000000e1`abaffa20 00007ffa`c962f55f : Qt6Cored!QFileInfo::filePath+0x1fd3fe
+00007ffa`c99c5534     : 0000020b`7f4ce100 cccccccc`cccccccc cccccccc`cccccccc cccccccc`cccccccc : Qt6Cored!QFileInfo::filePath+0x43f10d
+00007ffa`c9bcdf90     : 0000020b`7f4ce100 000000e1`abaffacc 000000e1`abaffab8 00000000`00000000 : Qt6Cored!QFileInfo::filePath+0x43efce
+00007ffb`ad51e8d7     : 0000020b`7f4ce100 00000000`00000000 00000000`00000000 00000000`00000000 : Qt6Cored!QFileInfo::filePath+0x647a2a
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+#  7  Id: 6588.7e9c Suspend: 1 Teb: 000000e1`ab2cd000 Unfrozen "QThread"
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`04b88eaf     : 000000e1`abbfa6b0 000000e1`abbfa6c4 0000020b`015f2ea8 00007ffb`04d9d1ae : 0x0
+00007ffb`04d9d696     : 0000020b`015f00c0 0000020b`083dcf80 0000020b`015f00e0 0000020b`015f00e0 : avcodec_62!ff_get_format+0xef
+00007ffb`04d9da96     : 0000020b`015f00c0 0000020b`015f00e0 0000020b`015f00c0 00000000`00000000 : avcodec_62!get_format+0x126
+00007ffb`04d9cf72     : 0000020b`00000001 0000020b`00000cb1 0000020b`00000004 0000020b`00000000 : avcodec_62!hevc_frame_start+0x216
+00007ffb`04d9c866     : 0000020b`015f00c0 00000000`00000160 00000000`00000004 0000020b`083da0e0 : avcodec_62!decode_slice+0x182
+00007ffb`04d9cb9d     : 0000020b`015f00c0 00000000`00000000 00000000`00000000 0000020b`7f4d11c0 : avcodec_62!decode_nal_unit+0x196
+00007ffb`04d9af12     : 00000000`00000000 00000000`dfb9b0bb 0000020b`015f00c0 00007ffb`081d3c9b : avcodec_62!decode_nal_units+0x27d
+00007ffb`04b86d61     : 00000000`00000000 0000020b`0169f0c0 0000020b`0169ef40 00007ffb`081b0e8a : avcodec_62!hevc_receive_frame+0x1b2
+(Inline Function)     : --------`-------- --------`-------- --------`-------- --------`-------- : avcodec_62!ff_decode_receive_frame_internal+0x77
+00007ffb`04b86a82     : 0000020b`7f4dde40 0000020b`7f4dde40 00000000`00000000 0000020b`7f4d11c0 : avcodec_62!decode_receive_frame_internal+0xb1
+00007ff7`128415a6     : 00000000`00000000 000000e1`abbff8a0 0000020b`083bfc40 000000e1`abbfb120 : avcodec_62!avcodec_send_packet+0xf2
+00007ff7`128730b0     : 0000020b`7f4d05f0 000000e1`abbfadb8 0000019d`b07a5801 0000019d`b07a5802 : untitled!MyDecoder::Decode+0x246
+00007ff7`1286fee8     : 000000e1`abbfae40 00000000`00000000 00000000`00000000 00000000`00000000 : untitled!`QtPrivate::FunctorCall<QtPrivate::IndexesList<0,1,2>,QtPrivate::List<QByteArray,__int64,__int64>,void,void (__cdecl MyDecoder::*)(QByteArray,__int64,__int64)>::call'::`2'::<lambda_1>::operator()+0xd0
+00007ff7`12874275     : 0000020b`083dd1d0 000000e1`abbfae40 000000e1`abbfae70 000000e1`abbfae80 : untitled!QtPrivate::FunctorCallBase::call_internal<void,`QtPrivate::FunctorCall<QtPrivate::IndexesList<0,1,2>,QtPrivate::List<QByteArray,__int64,__int64>,void,void (__cdecl MyDecoder::*)(QByteArray,__int64,__int64)>::call'::`2'::<lambda_1> >+0x18
+00007ff7`1286fe27     : 00007ff7`127f50b0 0000020b`7f4d05f0 0000020b`083dd1d0 00000000`00000000 : untitled!QtPrivate::FunctorCall<QtPrivate::IndexesList<0,1,2>,QtPrivate::List<QByteArray,__int64,__int64>,void,void (__cdecl MyDecoder::*)(QByteArray,__int64,__int64)>::call+0x55
+00007ff7`128759b9     : 00007ff7`127f50b0 0000020b`7f4d05f0 0000020b`083dd1d0 00000000`00000000 : untitled!QtPrivate::FunctionPointer<void (__cdecl MyDecoder::*)(QByteArray,__int64,__int64)>::call<QtPrivate::List<QByteArray,__int64,__int64>,void>+0x27
+00007ffa`c9776f43     : cccccccc`00000001 0000020b`7f4edc40 0000020b`7f4d05f0 0000020b`083dd1d0 : untitled!QtPrivate::QCallableObject<void (__cdecl MyDecoder::*)(QByteArray,__int64,__int64),QtPrivate::List<QByteArray,__int64,__int64>,void>::impl+0x99
+00007ffa`c9826d9f     : 0000020b`7f4edc40 0000020b`7f4d05f0 0000020b`083dd1d0 00007ffa`c9bcec5d : Qt6Cored!QFileInfo::filePath+0x1f09dd
+00007ffa`c981db2a     : 0000020b`083dc8c0 0000020b`7f4d05f0 0000020b`7f4cfd20 00007ffa`00000004 : Qt6Cored!QFileInfo::filePath+0x2a0839
+00007ffa`dbc661eb     : 0000020b`7f4d05f0 0000020b`083dc8c0 00000000`00000000 00000000`00000000 : Qt6Cored!QFileInfo::filePath+0x2975c4
+00007ffa`dbc6361b     : 0000020b`7f45f640 0000020b`7f4d05f0 0000020b`083dc8c0 00000000`00000000 : Qt6Widgetsd!QLineEdit::`default constructor closure'+0x36545
+00007ffa`c9765244     : 000000e1`ab4ffbe8 0000020b`7f4d05f0 0000020b`083dc8c0 00000000`00000000 : Qt6Widgetsd!QLineEdit::`default constructor closure'+0x33975
+00007ffa`c976277b     : 0000020b`7f4d05f0 0000020b`083dc8c0 cccccccc`00000001 cccccccc`cccccccc : Qt6Cored!QFileInfo::filePath+0x1decde
+00007ffa`c97678a8     : 0000020b`7f4d05f0 0000020b`083dc8c0 cccccccc`00000000 0000020b`7f4cfc20 : Qt6Cored!QFileInfo::filePath+0x1dc215
+00007ffa`c9bb6c6f     : 00000000`00000000 00007ffa`00000000 0000020b`7f4cfc20 00007ffa`ca034220 : Qt6Cored!QFileInfo::filePath+0x1e1342
+00007ffa`c9bb4f7f     : 0000020b`7f5085f0 00000000`00000000 00000000`00000000 00000000`00000000 : Qt6Cored!QFileInfo::filePath+0x630709
+00007ffa`c978365c     : 0000020b`7f5085f0 00007ffa`00000024 000000e1`abbff6d0 00007ffa`00000024 : Qt6Cored!QFileInfo::filePath+0x62ea19
+00007ffa`c9783964     : 000000e1`abbff768 000000e1`00000024 000000e1`00000020 0000020b`00000000 : Qt6Cored!QFileInfo::filePath+0x1fd0f6
+00007ffa`c99c5673     : 000000e1`abbff768 00000000`00000000 000000e1`abbff7e0 00007ffa`c962f55f : Qt6Cored!QFileInfo::filePath+0x1fd3fe
+00007ffa`c99c5534     : 0000020b`7f4e24f0 cccccccc`cccccccc cccccccc`cccccccc cccccccc`cccccccc : Qt6Cored!QFileInfo::filePath+0x43f10d
+00007ffa`c9bcdf90     : 0000020b`7f4e24f0 000000e1`abbff8cc 000000e1`abbff878 00000000`00000000 : Qt6Cored!QFileInfo::filePath+0x43efce
+00007ffb`ad51e8d7     : 0000020b`7f4e24f0 00000000`00000000 00000000`00000000 00000000`00000000 : Qt6Cored!QFileInfo::filePath+0x647a2a
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+   8  Id: 6588.2f70 Suspend: 1 Teb: 000000e1`ab2cf000 Unfrozen
+SYMSRV:  BYINDEX: 0x11
+         C:\ProgramData\dbg\sym
+         mswsock.pdb
+         F62607541AA4E0B3FEAF3DB968C3F1E81
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\mswsock.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\mswsock.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0x12
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         mswsock.pdb
+         F62607541AA4E0B3FEAF3DB968C3F1E81
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\mswsock.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\mswsock.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\file.ptr - path not found
+SYMSRV:  HTTPGET: /download/symbols/mswsock.pdb/F62607541AA4E0B3FEAF3DB968C3F1E81/mswsock.pdb
+SYMSRV:  HttpQueryInfo: 801900c8 - HTTP_STATUS_OK
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\mswsock.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\mswsock.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\file.ptr - path not found
+SYMSRV:  mswsock.pdb from https://msdl.microsoft.com/download/symbols: 380928 bytes -                0 percent   1 percent  25 percent  60 percent copied      
+SYMSRV:  PATH: C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\mswsock.pdb
+SYMSRV:  RESULT: 0x00000000
+DBGHELP: C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\mswsock.pdb cached to C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\mswsock.pdb
+DBGHELP: mswsock - public symbols  
+        C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\mswsock.pdb
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`aa1c767f     : 00000000`00000001 000000e1`abcff840 00007ffb`aa1b0000 00000000`00000000 : ntdll!NtRemoveIoCompletion+0x14
+00007ffb`ad51e8d7     : 0000020b`082a0910 00007ffb`aa1c67b0 00000000`00000000 00000000`00000000 : mswsock!SockAsyncThread+0xaf
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+   9  Id: 6588.6f50 Suspend: 1 Teb: 000000e1`ab2d1000 Unfrozen
+SYMSRV:  BYINDEX: 0x13
+         C:\ProgramData\dbg\sym
+         kernelbase.pdb
+         101BD3C89F4205B322B2E69A02E23BDB1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\kernelbase.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\kernelbase.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0x14
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         kernelbase.pdb
+         101BD3C89F4205B322B2E69A02E23BDB1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\kernelbase.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\kernelbase.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\file.ptr - path not found
+SYMSRV:  HTTPGET: /download/symbols/kernelbase.pdb/101BD3C89F4205B322B2E69A02E23BDB1/kernelbase.pdb
+SYMSRV:  HttpQueryInfo: 801900c8 - HTTP_STATUS_OK
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\kernelbase.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\kernelbase.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\file.ptr - path not found
+SYMSRV:  kernelbase.pdb from https://msdl.microsoft.com/download/symbols: 12324864 bytes -                0 percent   0 percent   3 percent  24 percent  42 percent  55 percent  68 percent  74 percent  79 percent  85 percent  91 percent  96 percent 100 percent copied      
+SYMSRV:  PATH: C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\kernelbase.pdb
+SYMSRV:  RESULT: 0x00000000
+DBGHELP: C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\kernelbase.pdb cached to C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\kernelbase.pdb
+DBGHELP: KERNELBASE - public symbols  
+        C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\kernelbase.pdb
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`aaef1a93     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!NtWaitForMultipleObjects+0x14
+SYMSRV:  BYINDEX: 0x15
+         C:\ProgramData\dbg\sym
+         combase.pdb
+         989144430DDEF2E2D96F99E1E1C466A11
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\combase.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\combase.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0x16
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         combase.pdb
+         989144430DDEF2E2D96F99E1E1C466A11
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\combase.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\combase.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\file.ptr - path not found
+SYMSRV:  HTTPGET: /download/symbols/combase.pdb/989144430DDEF2E2D96F99E1E1C466A11/combase.pdb
+SYMSRV:  HttpQueryInfo: 801900c8 - HTTP_STATUS_OK
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\combase.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\combase.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\file.ptr - path not found
+SYMSRV:  combase.pdb from https://msdl.microsoft.com/download/symbols: 81686528 bytes -                0 percent   0 percent   0 percent   3 percent   5 percent   8 percent   9 percent  10 percent  11 percent  11 percent  12 percent  13 percent  13 percent  14 percent  15 percent  15 percent  16 percent  17 percent  17 percent  18 percent  19 percent  19 percent  20 percent  21 percent  22 percent  23 percent  24 percent  25 percent  27 percent  29 percent  30 percent  31 percent  32 percent  33 percent  33 percent  34 percent  35 percent  36 percent  36 percent  37 percent  37 percent  38 percent  39 percent  39 percent  40 percent  40 percent  41 percent  41 percent  42 percent  42 percent  43 percent  44 percent  45 percent  45 percent  46 percent  47 percent  48 percent  48 percent  49 percent  50 percent  50 percent  51 percent  52 percent  53 percent  54 percent  55 percent  56 percent  56 percent  57 percent  58 percent  58 percent  59 percent  59 percent  60 percent  60 percent  60 percent  61 percent  61 percent  62 percent  62 percent  63 percent  63 percent  63 percent  64 percent  64 percent  65 percent  65 percent  66 percent  67 percent  68 percent  69 percent  70 percent  71 percent  71 percent  72 percent  72 percent  73 percent  73 percent  74 percent  75 percent  75 percent  76 percent  77 percent  78 percent  79 percent  80 percent  80 percent  81 percent  82 percent  83 percent  84 percent  85 percent  86 percent  87 percent  88 percent  88 percent  89 percent  90 percent  90 percent  91 percent  92 percent  92 percent  93 percent  93 percent  94 percent  94 percent  95 percent  95 percent  96 percent  97 percent  98 percent  99 percent copied      
+SYMSRV:  PATH: C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\combase.pdb
+SYMSRV:  RESULT: 0x00000000
+DBGHELP: C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\combase.pdb cached to C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\combase.pdb
+DBGHELP: combase - private symbols & lines 
+        C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\combase.pdb
+00007ffb`ae07ffce     : 00000000`000004f8 00000000`00000000 00000000`000004f8 00000000`00000000 : KERNELBASE!WaitForMultipleObjectsEx+0x123
+(Inline Function)     : --------`-------- --------`-------- --------`-------- --------`-------- : combase!WaitCoalesced+0x79
+00007ffb`ae075eaf     : 0000020b`7f5289a0 00000000`00000000 0000020b`7f51da40 0000020b`7f51da40 : combase!CROIDTable::WorkerThreadLoop+0xae
+00007ffb`ae075dbf     : 0000020b`7f51da40 00000000`00000000 0000020b`7f51da40 00000000`00000000 : combase!CRpcThread::WorkerLoop+0x5b
+00007ffb`ad51e8d7     : 0000020b`7f51da40 00000000`00000000 00000000`00000000 00000000`00000000 : combase!CRpcThreadCache::RpcWorkerThreadEntry+0x4f
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+  10  Id: 6588.77b4 Suspend: 1 Teb: 000000e1`ab2d3000 Unfrozen
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`ae655dfe     : 00000000`00000010 00000000`00000000 00007ffb`ae657a70 0000020b`7f50fe30 : ntdll!NtWaitForWorkViaWorkerFactory+0x14
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!TppWorkerThread+0x37e
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+  11  Id: 6588.2960 Suspend: 1 Teb: 000000e1`ab2d5000 Unfrozen
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`ae655dfe     : 0000020b`7f50fe30 00000000`00000000 00007ffb`ae654d60 0000020b`7f50fe30 : ntdll!NtWaitForWorkViaWorkerFactory+0x14
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!TppWorkerThread+0x37e
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+  12  Id: 6588.5898 Suspend: 1 Teb: 000000e1`ab2e7000 Unfrozen
+SYMSRV:  BYINDEX: 0x17
+         C:\ProgramData\dbg\sym
+         dwmapi.pdb
+         DF9289EEF5189C7E8E09E7FE599A1A3D1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\dwmapi.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\dwmapi.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0x18
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         dwmapi.pdb
+         DF9289EEF5189C7E8E09E7FE599A1A3D1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\dwmapi.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\dwmapi.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\file.ptr - path not found
+SYMSRV:  HTTPGET: /download/symbols/dwmapi.pdb/DF9289EEF5189C7E8E09E7FE599A1A3D1/dwmapi.pdb
+SYMSRV:  HttpQueryInfo: 801900c8 - HTTP_STATUS_OK
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\dwmapi.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\dwmapi.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\file.ptr - path not found
+SYMSRV:  dwmapi.pdb from https://msdl.microsoft.com/download/symbols: 348160 bytes -                0 percent   1 percent  98 percent copied      
+SYMSRV:  PATH: C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\dwmapi.pdb
+SYMSRV:  RESULT: 0x00000000
+DBGHELP: C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\dwmapi.pdb cached to C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\dwmapi.pdb
+DBGHELP: dwmapi - public symbols  
+        C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\dwmapi.pdb
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`a89070dd     : 0000020b`7f430000 00000000`00000000 00007ffb`a8911f10 00000000`00000000 : ntdll!NtAlpcSendWaitReceivePort+0x14
+00007ffb`a8906cdf     : 00007ffb`a8911f20 0000020b`0186c870 00000000`00000000 00000000`00000000 : dwmapi!CPortClient::SendComplexSyncRequest+0x149
+00007ffb`a88f44b4     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : dwmapi!CApiPortClient::SendRequest+0xcf
+00007ffb`a88f43b7     : 00000000`00000048 00000000`00000001 00000000`00000000 00000000`00000000 : dwmapi!CApiPortClient::SendRequest+0x34
+SYMSRV:  BYINDEX: 0x19
+         C:\ProgramData\dbg\sym
+         igxelpicd64.pdb
+         1198130D03BB4555AC652398135C39CF1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\igxelpicd64.pdb\1198130D03BB4555AC652398135C39CF1\igxelpicd64.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\igxelpicd64.pdb\1198130D03BB4555AC652398135C39CF1\igxelpicd64.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\igxelpicd64.pdb\1198130D03BB4555AC652398135C39CF1\file.ptr - path not found
+SYMSRV:  RESULT: 0x80070003
+SYMSRV:  BYINDEX: 0x1A
+         C:\ProgramData\dbg\sym*https://msdl.microsoft.com/download/symbols
+         igxelpicd64.pdb
+         1198130D03BB4555AC652398135C39CF1
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\igxelpicd64.pdb\1198130D03BB4555AC652398135C39CF1\igxelpicd64.pdb - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\igxelpicd64.pdb\1198130D03BB4555AC652398135C39CF1\igxelpicd64.pd_ - path not found
+SYMSRV:  UNC: C:\ProgramData\dbg\sym\igxelpicd64.pdb\1198130D03BB4555AC652398135C39CF1\file.ptr - path not found
+SYMSRV:  HTTPGET: /download/symbols/igxelpicd64.pdb/1198130D03BB4555AC652398135C39CF1/igxelpicd64.pdb
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/igxelpicd64.pdb/1198130D03BB4555AC652398135C39CF1/igxelpicd64.pd_
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  HTTPGET: /download/symbols/igxelpicd64.pdb/1198130D03BB4555AC652398135C39CF1/file.ptr
+SYMSRV:  HttpQueryInfo: 80190194 - HTTP_STATUS_NOT_FOUND
+SYMSRV:  RESULT: 0x80190194
+DBGHELP: C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igxelpicd64.pdb - file not found
+DBGHELP: D:\qb\workspace\21461\source\output\dump64\OpenGL\Release\igxelpicd64.pdb - file not found
+DBGHELP: igxelpicd64 - export symbols
+00007ffa`e948d3dd     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000620 : dwmapi!DwmFlush+0x57
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : igxelpicd64!DrvValidateVersion+0x19b6d
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+  13  Id: 6588.6668 Suspend: 1 Teb: 000000e1`ab2d9000 Unfrozen
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`aaef1a93     : 00007ffa`e9240000 00007ffb`aaf53fda 00000000`00007d90 00007ffb`ae682f01 : ntdll!NtWaitForMultipleObjects+0x14
+00007ffb`aaef1961     : 00000000`00000000 00007ffb`aaf659cd 00000000`00000000 00000000`00000000 : KERNELBASE!WaitForMultipleObjectsEx+0x123
+00007ffa`e94a2231     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : KERNELBASE!WaitForMultipleObjects+0x11
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : igxelpicd64!RegisterProcTableCallback+0x3e91
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+  14  Id: 6588.43e4 Suspend: 1 Teb: 000000e1`ab2db000 Unfrozen
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`ae674c0e     : 00000001`0000054c 50534944`5c2e5c5c 00000000`3159414c 00007ffb`ae745b24 : ntdll!NtWaitForAlertByThreadId+0x14
+00007ffb`aaef1d78     : 00000000`00000000 00000000`00000000 000000e1`ac2ffc90 00000000`00000000 : ntdll!RtlSleepConditionVariableSRW+0x1de
+00007ffa`e9bef658     : 00007ffa`ea5c9940 000000e1`ac2ffd00 000000e1`ac2ffd80 00000000`000000fa : KERNELBASE!SleepConditionVariableSRW+0x38
+00007ffa`e9cbf55a     : 000000e1`ac2ffd80 000000e1`ac2ffd80 00000000`000000fa 00007ffa`ea5c9930 : igxelpicd64!DumpRegistryKeyDefinitions+0x5c5558
+00007ffa`e9265eb3     : 000000e1`ac2ffd80 000000e1`ac2ffd80 00000000`00000000 00000000`00000000 : igxelpicd64!DumpRegistryKeyDefinitions+0x69545a
+00007ffa`e94a199c     : 00000000`000000fa 0000020b`017e33a0 000000e1`ac2ffdd0 0000020b`017e33a0 : igxelpicd64+0x25eb3
+00007ffa`e92c7e62     : 00000000`000000fa 0000020b`017c1f70 00000000`00000000 00000000`00000000 : igxelpicd64!RegisterProcTableCallback+0x35fc
+00007ffa`e9c26fff     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : igxelpicd64+0x87e62
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : igxelpicd64!DumpRegistryKeyDefinitions+0x5fceff
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+  15  Id: 6588.7da8 Suspend: 1 Teb: 000000e1`ab2e9000 Unfrozen
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`ae674c0e     : 0000020b`082b4a00 00007ffa`e92b1fbe 0000020b`083eb9c0 0000020b`00000000 : ntdll!NtWaitForAlertByThreadId+0x14
+00007ffb`aaef1d78     : 00000000`00000000 0000020b`01d5bbe8 00000000`00000000 00000000`00000000 : ntdll!RtlSleepConditionVariableSRW+0x1de
+00007ffa`e9cfea15     : 000000e1`ac3ffaa0 0000020b`01d69640 00000000`00000000 00000000`00000000 : KERNELBASE!SleepConditionVariableSRW+0x38
+00007ffa`e9cfdf60     : 0000020b`01d5bbc0 00007ffa`e9cfea49 0000020b`01d5bbc0 0000020b`01d733a0 : igxelpicd64!DumpRegistryKeyDefinitions+0x6d4915
+00007ffa`e9cfdc96     : 0000020b`01d5bbc0 0000020b`01d5bbf8 0000020b`01d5bbc0 00000000`00000000 : igxelpicd64!DumpRegistryKeyDefinitions+0x6d3e60
+00007ffa`e9cff3a2     : 00000000`00000000 0000020b`01d5bc70 00000000`00000000 00000000`00000000 : igxelpicd64!DumpRegistryKeyDefinitions+0x6d3b96
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : igxelpicd64!DumpRegistryKeyDefinitions+0x6d52a2
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+
+  16  Id: 6588.7d88 Suspend: 1 Teb: 000000e1`ab2eb000 Unfrozen
+RetAddr               : Args to Child                                                           : Call Site
+00007ffb`ae674c0e     : 0000020b`08295130 00007ffa`e9487883 00000000`00000000 00000000`00000000 : ntdll!NtWaitForAlertByThreadId+0x14
+00007ffb`aaef1d78     : 00000000`00000000 0000020b`0806a6f8 00000000`00000000 00000000`00000000 : ntdll!RtlSleepConditionVariableSRW+0x1de
+00007ffa`e9cfea15     : 000000e1`ac4ffd30 000000e1`ac4ffd30 000000e1`ac4ffd30 0000020b`07fc0080 : KERNELBASE!SleepConditionVariableSRW+0x38
+00007ffa`e9cfdf60     : 0000020b`0806a6d0 00007ffa`e9cfea49 0000020b`0806a6d0 0000020b`080631c0 : igxelpicd64!DumpRegistryKeyDefinitions+0x6d4915
+00007ffa`e9cfdc96     : 0000020b`0806a6d0 0000020b`0806a708 0000020b`0806a6d0 00000000`00000000 : igxelpicd64!DumpRegistryKeyDefinitions+0x6d3e60
+00007ffa`e9cff3a2     : 00000000`00000000 0000020b`0806a780 00000000`00000000 00000000`00000000 : igxelpicd64!DumpRegistryKeyDefinitions+0x6d3b96
+00007ffb`ad51e8d7     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : igxelpicd64!DumpRegistryKeyDefinitions+0x6d52a2
+00007ffb`ae66c3fc     : 00000000`00000000 00000000`00000000 000004f0`fffffb30 000004d0`fffffb30 : KERNEL32!BaseThreadInitThunk+0x17
+00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x2c
+0:007> lm
+start             end                 module name
+00007ff7`127f0000 00007ff7`12947000   untitled C (private pdb symbols)  C:\ProgramData\dbg\sym\untitled.pdb\159B65E220C540369ABD384BF9CF56FC1\untitled.pdb
+00007ffa`c9550000 00007ffa`ca51d000   Qt6Cored   (export symbols)       D:\Qt\6.8.2\msvc2022_64\bin\Qt6Cored.dll
+00007ffa`d97a0000 00007ffa`db111000   Qt6Guid    (export symbols)       D:\Qt\6.8.2\msvc2022_64\bin\Qt6Guid.dll
+00007ffa`dbbf0000 00007ffa`dcc12000   Qt6Widgetsd   (export symbols)       D:\Qt\6.8.2\msvc2022_64\bin\Qt6Widgetsd.dll
+00007ffa`dd100000 00007ffa`dd6d7000   Qt6Core    (deferred)             
+00007ffa`e9240000 00007ffa`ea6ac000   igxelpicd64   (export symbols)       C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_0eac281dc2d07a5f\igxelpicd64.dll
+00007ffb`048b0000 00007ffb`05bda000   avcodec_62 C (private pdb symbols)  C:\ProgramData\dbg\sym\avcodec-62.pdb\B584E5CB493A48B98977C23F0117228A1\avcodec-62.pdb
+00007ffb`05be0000 00007ffb`066ab000   libprotobuf   (deferred)             
+00007ffb`07060000 00007ffb`073ec000   qwindowsd   (deferred)             
+00007ffb`07c60000 00007ffb`08177000   Qt6Networkd   (deferred)             
+00007ffb`08180000 00007ffb`09272000   avutil_60   (deferred)             
+00007ffb`221d0000 00007ffb`221fd000   GLU32      (deferred)             
+00007ffb`22200000 00007ffb`2230f000   opengl32   (deferred)             
+00007ffb`310c0000 00007ffb`31168000   qmodernwindowsstyled   (deferred)             
+00007ffb`31170000 00007ffb`31320000   Qt6Network   (deferred)             
+00007ffb`346c0000 00007ffb`348c4000   ucrtbased   (deferred)             
+00007ffb`348d0000 00007ffb`349b1000   MSVCP140D   (deferred)             
+00007ffb`349c0000 00007ffb`34e58000   Qt6OpenGLd   (deferred)             
+00007ffb`35280000 00007ffb`3537b000   swscale_9   (deferred)             
+00007ffb`35380000 00007ffb`35588000   abseil_dll   (deferred)             
+00007ffb`37f10000 00007ffb`37f81000   MSVCP140_2D   (deferred)             
+00007ffb`6e1a0000 00007ffb`6e341000   igdml64    (deferred)             
+00007ffb`70b00000 00007ffb`70b22000   swresample_6   (deferred)             
+00007ffb`73f60000 00007ffb`73fba000   dataexchange   (deferred)             
+00007ffb`73fe0000 00007ffb`74010000   VCRUNTIME140D   (deferred)             
+00007ffb`74040000 00007ffb`74069000   Qt6OpenGLWidgetsd   (deferred)             
+00007ffb`79020000 00007ffb`79045000   Qt6Qmqtt   (deferred)             
+00007ffb`7edc0000 00007ffb`7f1e0000   UIAutomationCore   (deferred)             
+00007ffb`835b0000 00007ffb`83843000   COMCTL32   (deferred)             
+00007ffb`84220000 00007ffb`8436f000   Windows_UI_Immersive   (deferred)             
+00007ffb`84e50000 00007ffb`84f98000   textinputframework   (deferred)             
+00007ffb`88b70000 00007ffb`88b8a000   NETAPI32   (deferred)             
+00007ffb`88c50000 00007ffb`88da9000   Windows_UI   (deferred)             
+00007ffb`89920000 00007ffb`899a9000   MSVCP140   (deferred)             
+00007ffb`899b0000 00007ffb`899ce000   VCRUNTIME140   (deferred)             
+00007ffb`8ac80000 00007ffb`8ae32000   d3d9       (deferred)             
+00007ffb`8b300000 00007ffb`8b30a000   MSVCP140_1D   (deferred)             
+00007ffb`8b760000 00007ffb`8b783000   d3d12      (deferred)             
+00007ffb`8d6d0000 00007ffb`8d6d9000   MSVCP140_1   (deferred)             
+00007ffb`8dbf0000 00007ffb`8dbfc000   VCRUNTIME140_1   (deferred)             
+00007ffb`8ece0000 00007ffb`8ecef000   VCRUNTIME140_1D   (deferred)             
+00007ffb`90dc0000 00007ffb`90ddd000   windows_staterepositorycore   (deferred)             
+00007ffb`96ea0000 00007ffb`96ec9000   SRVCLI     (deferred)             
+00007ffb`984f0000 00007ffb`98511000   MPR        (deferred)             
+00007ffb`99e00000 00007ffb`99e0b000   VERSION    (deferred)             
+00007ffb`9ac00000 00007ffb`9ae4d000   twinapi_appcore   (deferred)             
+00007ffb`9b420000 00007ffb`a06d4000   igc64      (deferred)             
+00007ffb`a06e0000 00007ffb`a0c8b000   igdgmm64   (deferred)             
+00007ffb`a2c80000 00007ffb`a2cb6000   WINMM      (deferred)             
+00007ffb`a3ad0000 00007ffb`a3af5000   dhcpcsvc   (deferred)             
+00007ffb`a3da0000 00007ffb`a3e01000   directxdatabasehelper   (deferred)             
+00007ffb`a4800000 00007ffb`a481d000   dhcpcsvc6   (deferred)             
+00007ffb`a5030000 00007ffb`a515d000   WINHTTP    (deferred)             
+00007ffb`a5e00000 00007ffb`a6067000   DWrite     (deferred)             
+00007ffb`a66b0000 00007ffb`a6913000   d3d11      (deferred)             
+00007ffb`a8170000 00007ffb`a817d000   Secur32    (deferred)             
+00007ffb`a8300000 00007ffb`a8329000   WTSAPI32   (deferred)             
+00007ffb`a8660000 00007ffb`a8709000   UxTheme    (deferred)             
+00007ffb`a8710000 00007ffb`a8753000   dxcore     (deferred)             
+00007ffb`a8780000 00007ffb`a88c1000   dxgi       (deferred)             
+00007ffb`a88f0000 00007ffb`a891f000   dwmapi     (pdb symbols)          C:\ProgramData\dbg\sym\dwmapi.pdb\DF9289EEF5189C7E8E09E7FE599A1A3D1\dwmapi.pdb
+00007ffb`a8c10000 00007ffb`a8e52000   dbghelp    (deferred)             
+00007ffb`a95e0000 00007ffb`a95ed000   NETUTILS   (deferred)             
+00007ffb`a9690000 00007ffb`a96e0000   AUTHZ      (deferred)             
+00007ffb`a96f0000 00007ffb`a9722000   IPHLPAPI   (deferred)             
+00007ffb`a9730000 00007ffb`a9862000   DNSAPI     (deferred)             
+00007ffb`a9c40000 00007ffb`a9c5b000   kernel_appcore   (deferred)             
+00007ffb`a9ee0000 00007ffb`a9f29000   SSPICLI    (deferred)             
+00007ffb`aa1b0000 00007ffb`aa21c000   mswsock    (pdb symbols)          C:\ProgramData\dbg\sym\mswsock.pdb\F62607541AA4E0B3FEAF3DB968C3F1E81\mswsock.pdb
+00007ffb`aa260000 00007ffb`aa293000   USERENV    (deferred)             
+00007ffb`aa4b0000 00007ffb`aa4bc000   CRYPTBASE   (deferred)             
+00007ffb`aa500000 00007ffb`aa513000   MSASN1     (deferred)             
+00007ffb`aa9f0000 00007ffb`aaa41000   cfgmgr32   (deferred)             
+00007ffb`aaa50000 00007ffb`aaa7d000   DEVOBJ     (deferred)             
+00007ffb`aacf0000 00007ffb`aad04000   UMPDC      (deferred)             
+00007ffb`aad10000 00007ffb`aad6e000   powrprof   (deferred)             
+00007ffb`aada0000 00007ffb`aadca000   bcrypt     (deferred)             
+00007ffb`aadd0000 00007ffb`aadf9000   profapi    (deferred)             
+00007ffb`aaeb0000 00007ffb`ab2a4000   KERNELBASE   (pdb symbols)          C:\ProgramData\dbg\sym\kernelbase.pdb\101BD3C89F4205B322B2E69A02E23BDB1\kernelbase.pdb
+00007ffb`ab2b0000 00007ffb`ab3db000   gdi32full   (deferred)             
+00007ffb`ab3e0000 00007ffb`ab52b000   ucrtbase   (deferred)             
+00007ffb`ab530000 00007ffb`ab69a000   wintypes   (deferred)             
+00007ffb`ab6a0000 00007ffb`ab6c7000   win32u     (pdb symbols)          C:\ProgramData\dbg\sym\win32u.pdb\AD5C7A53399F01EF9A51D20899BA03FD1\win32u.pdb
+00007ffb`ab6d0000 00007ffb`ab775000   bcryptPrimitives   (deferred)             
+00007ffb`ab780000 00007ffb`ab802000   WINTRUST   (deferred)             
+00007ffb`ab8d0000 00007ffb`ac138000   windows_storage   (deferred)             
+00007ffb`ac140000 00007ffb`ac2b7000   CRYPT32    (deferred)             
+00007ffb`ac2c0000 00007ffb`ac363000   msvcp_win   (deferred)             
+00007ffb`ac370000 00007ffb`ac535000   USER32     (deferred)             
+00007ffb`ac540000 00007ffb`ac5e9000   msvcrt     (deferred)             
+00007ffb`ac5f0000 00007ffb`ac656000   shlwapi    (deferred)             
+00007ffb`ac720000 00007ffb`ac80f000   COMDLG32   (deferred)             
+00007ffb`ac820000 00007ffb`ac938000   RPCRT4     (deferred)             
+00007ffb`ac960000 00007ffb`ad0c7000   SHELL32    (deferred)             
+00007ffb`ad0d0000 00007ffb`ad1c8000   SHCORE     (deferred)             
+00007ffb`ad1d0000 00007ffb`ad1da000   NSI        (deferred)             
+00007ffb`ad410000 00007ffb`ad4e8000   OLEAUT32   (deferred)             
+00007ffb`ad4f0000 00007ffb`ad5b9000   KERNEL32   (pdb symbols)          C:\ProgramData\dbg\sym\kernel32.pdb\3793FC137439CF05281960D0AC2979DC1\kernel32.pdb
+00007ffb`ad5c0000 00007ffb`ad66e000   clbcatq    (deferred)             
+00007ffb`ad710000 00007ffb`ad742000   IMM32      (deferred)             
+00007ffb`ad750000 00007ffb`adbd7000   SETUPAPI   (deferred)             
+00007ffb`adbe0000 00007ffb`adc60000   WS2_32     (deferred)             
+00007ffb`adc80000 00007ffb`adcab000   GDI32      (deferred)             
+00007ffb`adcb0000 00007ffb`add57000   sechost    (deferred)             
+00007ffb`addc0000 00007ffb`adf57000   ole32      (deferred)             
+00007ffb`adf60000 00007ffb`ae2e2000   combase    (private pdb symbols)  C:\ProgramData\dbg\sym\combase.pdb\989144430DDEF2E2D96F99E1E1C466A11\combase.pdb
+00007ffb`ae2f0000 00007ffb`ae3a6000   ADVAPI32   (deferred)             
+00007ffb`ae430000 00007ffb`ae58c000   MSCTF      (deferred)             
+00007ffb`ae5e0000 00007ffb`ae847000   ntdll      (pdb symbols)          C:\ProgramData\dbg\sym\ntdll.pdb\4FE96AFC99BB2AEBCC1F4B164354A6F51\ntdll.pdb
+
+Unloaded modules:
+00007ffb`a8fc0000 00007ffb`a8fd4000   resourcepolicyclient.dll
+00007ffb`a8fc0000 00007ffb`a8fd4000   resourcepolicyclient.dll
+00007ffb`10f80000 00007ffb`126eb000   igd9dxva64.dll
+00007ffb`90ef0000 00007ffb`92fc3000   media_bin_64.dll
+00007ffb`74410000 00007ffb`744c2000   IntelControlLib.dll
+00007ffb`8a990000 00007ffb`8a9de000   ControlLib.dll
+00007ffb`126f0000 00007ffb`1438d000   igd9trinity64.dll
+00007ffb`9b420000 00007ffb`a06d4000   igc64.dll
+00007ffb`a06e0000 00007ffb`a0c8b000   igdgmm64.dll
+00007ffb`8a9e0000 00007ffb`8ac7f000   igdumdim64.dll
+00007ffb`10f80000 00007ffb`126eb000   igd9dxva64.dll
+00007ffb`90ef0000 00007ffb`92fc3000   media_bin_64.dll
+00007ffb`74410000 00007ffb`744c2000   IntelControlLib.dll
+00007ffb`8a990000 00007ffb`8a9de000   ControlLib.dll
+00007ffb`126f0000 00007ffb`1438d000   igd9trinity64.dll
+00007ffb`9b420000 00007ffb`a06d4000   igc64.dll
+00007ffb`a06e0000 00007ffb`a0c8b000   igdgmm64.dll
+00007ffb`8a9e0000 00007ffb`8ac7f000   igdumdim64.dll
+00007ffb`a06e0000 00007ffb`a0c8b000   igdgmm64.dll
+00007ffb`74410000 00007ffb`744c2000   IntelControlLib.dll
+00007ffb`8a990000 00007ffb`8a9de000   ControlLib.dll
+0:007> q
+quit:
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\atlmfc.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\ObjectiveC.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\concurrency.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\cpp_rest.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\stl.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Data.Json.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Geolocation.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Sensors.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Media.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\windows.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\winrt.natvis'
