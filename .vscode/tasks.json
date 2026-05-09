@@ -1,0 +1,51 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "视频: 编译",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/deploy_ubuntu.sh"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": "build",
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": false
+      }
+    },
+    {
+      "label": "视频: 启动",
+      "type": "shell",
+      "command": "${workspaceFolder}/build/ubuntu-release/deploy/opt/untitled/bin/untitled",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": false
+      }
+    },
+    {
+      "label": "视频: 编译并启动",
+      "dependsOn": [
+        "视频: 编译",
+        "视频: 启动"
+      ],
+      "dependsOrder": "sequence",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

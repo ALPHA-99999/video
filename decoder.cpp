@@ -63,6 +63,7 @@ MyDecoder::MyDecoder(QObject *parent)
     : QObject{parent}
 {
     qRegisterMetaType<VideoFrame>("VideoFrame");
+    m_decodeLogTimer.start();
     if (!initDecoder()) {
         qWarning() << "HEVC解码器初始化失败";
     }
@@ -264,10 +265,29 @@ void MyDecoder::Decode(QByteArray frameData, qint64 udpFirstRecvMs, qint64 udpAs
         av_frame_unref(m_frame);
         ret = avcodec_receive_frame(m_codecCtx, m_frame);
         if (ret == 0) {
-            if (m_frame->pict_type == AV_PICTURE_TYPE_I || m_frame->pict_type == AV_PICTURE_TYPE_P) {
-                qDebug().noquote() << QString("Decoded %1 frame, inputSize=%2")
-                                          .arg(pictureTypeName(m_frame->pict_type))
-                                          .arg(frameData.size());
+            if (m_frame->pict_type == AV_PICTURE_TYPE_I) {
+                ++m_iFramesSinceLog;
+            } else if (m_frame->pict_type == AV_PICTURE_TYPE_P) {
+                ++m_pFramesSinceLog;
+            } else {
+                ++m_decodedFramesSinceLog;
+            }
+
+            const qint64 elapsedMs = m_decodeLogTimer.elapsed();
+            if (elapsedMs >= 5000) {
+                const double seconds = static_cast<double>(elapsedMs) / 1000.0;
+                const quint64 totalFrames = m_iFramesSinceLog + m_pFramesSinceLog + m_decodedFramesSinceLog;
+                const double frameRate = static_cast<double>(totalFrames) / seconds;
+                qDebug().noquote() << QString("Decode stats: total=%1 I=%2 P=%3 other=%4 rate=%5/s")
+                                          .arg(totalFrames)
+                                          .arg(m_iFramesSinceLog)
+                                          .arg(m_pFramesSinceLog)
+                                          .arg(m_decodedFramesSinceLog)
+                                          .arg(frameRate, 0, 'f', 2);
+                m_iFramesSinceLog = 0;
+                m_pFramesSinceLog = 0;
+                m_decodedFramesSinceLog = 0;
+                m_decodeLogTimer.restart();
             }
             VideoFrame outFrame;
             outFrame.udpFirstRecvMs = udpFirstRecvMs;

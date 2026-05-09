@@ -4,11 +4,7 @@
 #include <QDateTime>
 #include <QMutex>
 #include <QMutexLocker>
-
-#ifdef Q_OS_WIN
-#include <windows.h>
 #include <cstdio>
-#endif
 
 namespace {
 QMutex &logMutex()
@@ -36,18 +32,6 @@ const char *logLevelName(QtMsgType type)
 
 void installConsoleStreams()
 {
-#ifdef Q_OS_WIN
-    if (!AttachConsole(ATTACH_PARENT_PROCESS)) {
-        return;
-    }
-
-    SetConsoleOutputCP(CP_UTF8);
-    SetConsoleCP(CP_UTF8);
-
-    FILE *stream = nullptr;
-    freopen_s(&stream, "CONOUT$", "w", stdout);
-    freopen_s(&stream, "CONOUT$", "w", stderr);
-#endif
 }
 
 void commandLineMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &message)

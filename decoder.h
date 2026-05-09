@@ -2,6 +2,7 @@
 #define DECODER_H
 
 #include <QObject>
+#include <QElapsedTimer>
 #include "videoframe.h"
 extern "C" {
 #include <libavcodec/avcodec.h>
@@ -40,6 +41,10 @@ private:
     int m_rgbSwsWidth = 0;
     int m_rgbSwsHeight = 0;
     AVPixelFormat m_rgbSwsSrcFmt = AV_PIX_FMT_NONE;
+    quint64 m_decodedFramesSinceLog = 0;
+    quint64 m_iFramesSinceLog = 0;
+    quint64 m_pFramesSinceLog = 0;
+    QElapsedTimer m_decodeLogTimer;
 
 signals:
     void show__frame(const VideoFrame &frame);

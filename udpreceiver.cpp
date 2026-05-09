@@ -3,7 +3,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QImage>
-#include <Qthread>
+#include <QThread>
 #include <algorithm>
 UdpReceiver::UdpReceiver(QObject *parent)
     : QObject(parent)
@@ -17,6 +17,7 @@ UdpReceiver::UdpReceiver(QObject *parent)
 
     m_statsTimer = new QTimer(this);
     connect(m_statsTimer, &QTimer::timeout, this, &UdpReceiver::updateStatistics);
+    m_statsWindowTimer.start();
 }
 
 UdpReceiver::~UdpReceiver()
@@ -96,6 +97,7 @@ void UdpReceiver::readPendingDatagrams()
         }
 
         m_totalPackets++;
+        ++m_packetsSinceLog;
 
         // 解析头部
         FrameHeader header = parseHeader(data);
@@ -170,12 +172,9 @@ void UdpReceiver::processFrameData(quint16 frameId)
         if (completeFrame.size() == static_cast<int>(expectedSize)) {
             const qint64 firstRecvMs = m_frameFirstRecvMs.value(frameId, QDateTime::currentMSecsSinceEpoch());
             const qint64 assembledMs = QDateTime::currentMSecsSinceEpoch();
-            qDebug().noquote() << QString("UDP assembled frameId=0x%1 size=%2 fragments=%3")
-                                      .arg(frameId, 4, 16, QLatin1Char('0')).toUpper()
-                                      .arg(expectedSize)
-                                      .arg(fragmentIds.size());
             emit frame_toproess(completeFrame, firstRecvMs, assembledMs);
             m_totalFrames++;
+            ++m_framesSinceLog;
 
             // 移除已处理的帧
             m_frameBuffers.remove(frameId);
@@ -203,8 +202,24 @@ void UdpReceiver::cleanupOldFrames()
 
 void UdpReceiver::updateStatistics()
 {
+    const qint64 elapsedMs = m_statsWindowTimer.elapsed();
+    if (elapsedMs < 5000) {
+        return;
+    }
 
-        qDebug()<<"totol R_Frames"<<m_totalFrames;
+    const double seconds = static_cast<double>(elapsedMs) / 1000.0;
+    const double packetRate = static_cast<double>(m_packetsSinceLog) / seconds;
+    const double frameRate = static_cast<double>(m_framesSinceLog) / seconds;
+
+    qDebug().noquote() << QString("UDP stats: packets=%1 frames=%2 packetRate=%3/s frameRate=%4/s")
+                              .arg(m_totalPackets)
+                              .arg(m_totalFrames)
+                              .arg(packetRate, 0, 'f', 2)
+                              .arg(frameRate, 0, 'f', 2);
+
+    m_packetsSinceLog = 0;
+    m_framesSinceLog = 0;
+    m_statsWindowTimer.restart();
 
    //  emit statsUpdated(m_totalPackets, m_totalFrames, m_packetLossRate);
 }

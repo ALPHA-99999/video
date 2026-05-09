@@ -2,27 +2,7 @@
 
 ## 部署
 
-### Windows
-
-项目内置了 `deploy.ps1`：
-
-```powershell
-.\deploy.ps1
-```
-
-可选参数：
-
-```powershell
-.\deploy.ps1 -QtRoot "D:\Qt\6.8.2\msvc2022_64" -BuildDir "build\Desktop_Qt_6_8_2_MSVC2022_64bit-Release" -InstallRoot "deploy"
-```
-
-输出目录默认在：
-
-`build\Desktop_Qt_6_8_2_MSVC2022_64bit-Release\deploy\bin`
-
-### Ubuntu
-
-新增 `deploy_ubuntu.sh`：
+### Ubuntu / Linux
 
 先安装常用构建依赖：
 
@@ -47,13 +27,38 @@ chmod +x deploy_ubuntu.sh
 1. `qmake6` 生成构建文件
 2. `make -j$(nproc)` 编译
 3. `make install INSTALL_ROOT=./deploy` 安装到部署目录
-4. 如果系统安装了 `linuxdeployqt`，会自动尝试打包
 
 默认输出目录：
 
 `build/ubuntu-release/deploy/opt/untitled/bin`
 
+### 打包部署
+
+如果你想把程序带到另一台 Linux 电脑上运行，直接生成一个可搬运包：
+
+```bash
+bash package_ubuntu.sh
+```
+
+输出：
+
+1. 可执行包目录：`dist/untitled-linux-x86_64/`
+2. 压缩包：`dist/untitled-linux-x86_64.tar.gz`
+
+解压后运行：
+
+```bash
+./run.sh
+```
+
+包内会包含：
+
+- 程序本体
+- 运行依赖库
+- Qt `xcb` 平台插件
+- 启动 wrapper
+
 ## 本地依赖路径
 
 可复制 `local_paths.pri.example` 为 `local_paths.pri`，按本机修改路径。  
-`untitled.pro` 会自动包含 `local_paths.pri`（如果文件存在）。
+当前仓库默认从 `/home/arty/Documents/video_ros2/install` 读取 `QMQTT` 的头文件和 `libqmqtt.so`，如果你把它放到了别的位置，只需要改 `local_paths.pri` 里的 `QMQTT_ROOT`。

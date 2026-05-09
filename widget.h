@@ -2,11 +2,21 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QEvent>
+#include <QFrame>
+#include <QComboBox>
+#include <QLabel>
 #include <QQueue>
+#include <QThread>
+#include <QTimer>
+#include <QPushButton>
+#include <QResizeEvent>
+#include <QVBoxLayout>
+#include <QString>
 #include <decoder.h>
 #include "videoglwidget.h"
 #include "udpreceiver.h"
- #include "MQTT.h"
+#include "MQTT.h"
 #include "mqttframereceiver.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,6 +34,12 @@ public:
 
 
 private slots:
+    void onMqttLoginClicked();
+    void onMqttLogoutClicked();
+    void onMqttConnected();
+    void onMqttDisconnected();
+    void onMqttError(QMQTT::ClientError error);
+    void onMqttLoginTimeout();
     void onFramePresented(qint64 udpFirstRecvMs,
                           qint64 udpAssembledMs,
                           qint64 decodeStartMs,
@@ -39,6 +55,19 @@ protected:
 
 
 private:
+    enum class ToastKind {
+        Info,
+        Success,
+        Error
+    };
+
+    bool eventFilter(QObject *watched, QEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+    void setMqttOverlayVisible(bool visible);
+    void showToast(const QString &message, ToastKind kind = ToastKind::Info);
+    void updateMqttUiState();
+    QString mqttErrorText(QMQTT::ClientError error) const;
+
     QThread *m_UDPThread = nullptr;
     QThread *m_DecoderThread = nullptr;
     //QMQTT::Client *m_mqtt=nullptr;
@@ -63,7 +92,20 @@ private:
     quint64 m_fpsWindowFrames = 0;
     double m_outputFps = 0.0;
     Ui::Widget *ui;
+    QWidget *m_mqttOverlay = nullptr;
+    QFrame *m_mqttCard = nullptr;
+    QLabel *m_mqttTitleLabel = nullptr;
+    QLabel *m_mqttHintLabel = nullptr;
+    QComboBox *m_clientIdCombo = nullptr;
+    QPushButton *m_loginButton = nullptr;
+    QPushButton *m_logoutButton = nullptr;
+    QLabel *m_mqttStatusLabel = nullptr;
+    QWidget *m_toastLayer = nullptr;
+    QVBoxLayout *m_toastStack = nullptr;
     QTimer RemoteControl_Timer;
+    QTimer m_mqttLoginTimeoutTimer;
+    bool m_userRequestedLogout = false;
+    bool m_mqttOverlayVisible = false;
 };
 
 #endif // WIDGET_H

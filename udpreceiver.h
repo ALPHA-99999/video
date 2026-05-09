@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QUdpSocket>
 #include <QByteArray>
+#include <QElapsedTimer>
 #include <QTimer>
 #include <QLabel>
 #include <QMutex>
@@ -57,6 +58,9 @@ private:
     quint16 m_packetLossRate;
     QTimer *m_statsTimer;
     QLabel *m_displayLabel;
+    quint64 m_packetsSinceLog = 0;
+    quint64 m_framesSinceLog = 0;
+    QElapsedTimer m_statsWindowTimer;
     // 线程安全
     mutable QMutex m_mutex;
 

@@ -1,12 +1,7 @@
 # Copy this file to local_paths.pri and edit for your machine.
-
-FFMPEG_ROOT = D:/GitHub/vcpkg/packages/ffmpeg_x64-windows
-PROTOBUF_ROOT = D:/GitHub/vcpkg/packages/protobuf_x64-windows
-ABSEIL_ROOT = D:/GitHub/vcpkg/packages/abseil_x64-windows
-QMQTT_LIB_ROOT = C:/Users/24981/Desktop/lib
-
-# Linux example:
-# FFMPEG_ROOT = /opt/vcpkg/packages/ffmpeg_x64-linux
-# PROTOBUF_ROOT = /opt/vcpkg/packages/protobuf_x64-linux
-# ABSEIL_ROOT = /opt/vcpkg/packages/abseil_x64-linux
-# QMQTT_LIB_ROOT = /home/yourname/lib
+#
+# QMQTT is bundled separately. The default local setup in this workspace uses:
+# /home/arty/Documents/video_ros2/install
+#
+# If you have QMQTT installed somewhere else, point QMQTT_ROOT at that prefix.
+QMQTT_ROOT = /home/arty/Documents/video_ros2/install
