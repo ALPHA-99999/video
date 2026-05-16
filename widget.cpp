@@ -24,29 +24,34 @@ Widget::Widget(QWidget *parent)
     qApp->installEventFilter(this);
 
     m_UDPThread = new QThread(this);
-    m_DecoderThread = new QThread(this);
+    m_udpDecoderThread = new QThread(this);
+    m_mqttDecoderThread = new QThread(this);
 
     m_Udpreceiver = new UdpReceiver();
     m_mqttFrameReceiver = new MqttFrameReceiver();
-    m_decoder = new MyDecoder();
+    m_udpDecoder = new MyDecoder();
+    m_mqttDecoder = new MyDecoder();
     m_mqtt = new MQTT(EXAMPLE_HOST, EXAMPLE_PORT, this);
 
     m_Udpreceiver->moveToThread(m_UDPThread);
     m_mqttFrameReceiver->moveToThread(m_UDPThread);
-    m_decoder->moveToThread(m_DecoderThread);
+    m_udpDecoder->moveToThread(m_udpDecoderThread);
+    m_mqttDecoder->moveToThread(m_mqttDecoderThread);
     qRegisterMetaType<VideoFrame>("VideoFrame");
     qRegisterMetaType<QByteArray>("QByteArray");
     qRegisterMetaType<qint64>("qint64");
 
-    connect(m_Udpreceiver, &UdpReceiver::frame_toproess, m_decoder, &MyDecoder::Decode);
+    connect(m_Udpreceiver, &UdpReceiver::frame_toproess, m_udpDecoder, &MyDecoder::Decode);
     connect(m_mqtt, &MQTT::customByteBlockReceived, m_mqttFrameReceiver, &MqttFrameReceiver::ingestPacket);
-    connect(m_mqttFrameReceiver, &MqttFrameReceiver::frame_toproess, m_decoder, &MyDecoder::Decode);
-    connect(m_UDPThread, &QThread::started, m_Udpreceiver, &UdpReceiver::startListening);
-    connect(m_decoder, &MyDecoder::show__frame, ui->videoWidget, &VideoGLWidget::submitFrame);
+    connect(m_mqttFrameReceiver, &MqttFrameReceiver::frame_toproess, m_mqttDecoder, &MyDecoder::Decode);
+   connect(m_UDPThread, &QThread::started, m_Udpreceiver, &UdpReceiver::startListening);
+    connect(m_udpDecoder, &MyDecoder::show__frame, this, &Widget::onUdpDecodedFrame);
+    connect(m_mqttDecoder, &MyDecoder::show__frame, this, &Widget::onMqttDecodedFrame);
     connect(ui->videoWidget, &VideoGLWidget::framePresented, this, &Widget::onFramePresented);
     connect(m_mqtt, &QMQTT::Client::connected, this, &Widget::onMqttConnected);
     connect(m_mqtt, &QMQTT::Client::disconnected, this, &Widget::onMqttDisconnected);
     connect(m_mqtt, &QMQTT::Client::error, this, &Widget::onMqttError);
+    applyVideoSourceLayout(m_activeVideoSource);
 
     m_mqttOverlay = new QWidget(this);
     m_mqttOverlay->setObjectName("mqttOverlay");
@@ -189,7 +194,8 @@ if (m_mqtt->connectionState()!=QMQTT::ConnectionState::STATE_CONNECTED)  m_mqtt-
     }
 
     m_UDPThread->start();
-    m_DecoderThread->start();
+    m_udpDecoderThread->start();
+    m_mqttDecoderThread->start();
 }
 
 Widget::~Widget()
@@ -200,9 +206,16 @@ Widget::~Widget()
     }
     delete ui;
     m_UDPThread->quit();
-    m_DecoderThread->quit();
+    m_udpDecoderThread->quit();
+    m_mqttDecoderThread->quit();
     m_UDPThread->wait();
-    m_DecoderThread->wait();
+    m_udpDecoderThread->wait();
+    m_mqttDecoderThread->wait();
+
+    delete m_Udpreceiver;
+    delete m_mqttFrameReceiver;
+    delete m_udpDecoder;
+    delete m_mqttDecoder;
 }
 
 bool Widget::eventFilter(QObject *watched, QEvent *event)
@@ -215,6 +228,13 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
                 setMqttOverlayVisible(!m_mqttOverlayVisible);
                 return true;
             }
+        }
+        if (keyEvent->key() == Qt::Key_X) {
+            const VideoSource nextSource = (m_activeVideoSource == VideoSource::Udp)
+                ? VideoSource::Mqtt
+                : VideoSource::Udp;
+            setActiveVideoSource(nextSource);
+            return true;
         }
     }
     return QWidget::eventFilter(watched, event);
@@ -255,6 +275,82 @@ void Widget::setMqttOverlayVisible(bool visible)
         } else {
             setFocus(Qt::OtherFocusReason);
         }
+    }
+}
+
+void Widget::setActiveVideoSource(VideoSource source)
+{
+    if (m_activeVideoSource == source) {
+        return;
+    }
+
+    m_activeVideoSource = source;
+    applyVideoSourceLayout(source);
+    if (source == VideoSource::Udp) {
+        showToast("视频源: UDP", ToastKind::Info);
+    } else {
+        showToast("视频源: MQTT", ToastKind::Info);
+    }
+    presentActiveSourceFrame();
+}
+
+void Widget::applyVideoSourceLayout(VideoSource source)
+{
+    if (!ui || !ui->videoWidget || !ui->rootLayout) {
+        return;
+    }
+
+    if (source == VideoSource::Mqtt) {
+        ui->videoWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        ui->videoWidget->setFixedSize(400, 400);
+        ui->rootLayout->setAlignment(ui->videoWidget, Qt::AlignCenter);
+    } else {
+        ui->videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        ui->videoWidget->setMinimumSize(QSize(0, 0));
+        ui->videoWidget->setMaximumSize(QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX));
+        ui->rootLayout->setAlignment(ui->videoWidget, Qt::Alignment());
+    }
+
+    ui->videoWidget->updateGeometry();
+    ui->rootLayout->invalidate();
+    ui->rootLayout->activate();
+}
+
+void Widget::presentActiveSourceFrame()
+{
+    if (!ui || !ui->videoWidget) {
+        return;
+    }
+
+    const bool hasFrame = (m_activeVideoSource == VideoSource::Udp)
+        ? m_hasLastUdpFrame
+        : m_hasLastMqttFrame;
+    if (!hasFrame) {
+        return;
+    }
+
+    if (m_activeVideoSource == VideoSource::Udp) {
+        ui->videoWidget->submitFrame(m_lastUdpFrame);
+    } else {
+        ui->videoWidget->submitFrame(m_lastMqttFrame);
+    }
+}
+
+void Widget::onUdpDecodedFrame(const VideoFrame &frame)
+{
+    m_lastUdpFrame = frame;
+    m_hasLastUdpFrame = true;
+    if (m_activeVideoSource == VideoSource::Udp && ui && ui->videoWidget) {
+        ui->videoWidget->submitFrame(frame);
+    }
+}
+
+void Widget::onMqttDecodedFrame(const VideoFrame &frame)
+{
+    m_lastMqttFrame = frame;
+    m_hasLastMqttFrame = true;
+    if (m_activeVideoSource == VideoSource::Mqtt && ui && ui->videoWidget) {
+        ui->videoWidget->submitFrame(frame);
     }
 }
 

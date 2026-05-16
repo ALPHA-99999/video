@@ -40,6 +40,8 @@ private slots:
     void onMqttDisconnected();
     void onMqttError(QMQTT::ClientError error);
     void onMqttLoginTimeout();
+    void onUdpDecodedFrame(const VideoFrame &frame);
+    void onMqttDecodedFrame(const VideoFrame &frame);
     void onFramePresented(qint64 udpFirstRecvMs,
                           qint64 udpAssembledMs,
                           qint64 decodeStartMs,
@@ -61,20 +63,35 @@ private:
         Error
     };
 
+    enum class VideoSource {
+        Udp,
+        Mqtt
+    };
+
     bool eventFilter(QObject *watched, QEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void setMqttOverlayVisible(bool visible);
+    void setActiveVideoSource(VideoSource source);
+    void presentActiveSourceFrame();
+    void applyVideoSourceLayout(VideoSource source);
     void showToast(const QString &message, ToastKind kind = ToastKind::Info);
     void updateMqttUiState();
     QString mqttErrorText(QMQTT::ClientError error) const;
 
     QThread *m_UDPThread = nullptr;
-    QThread *m_DecoderThread = nullptr;
+    QThread *m_udpDecoderThread = nullptr;
+    QThread *m_mqttDecoderThread = nullptr;
     //QMQTT::Client *m_mqtt=nullptr;
     UdpReceiver *m_Udpreceiver = nullptr;
     MqttFrameReceiver *m_mqttFrameReceiver = nullptr;
-    MyDecoder *m_decoder = nullptr;
+    MyDecoder *m_udpDecoder = nullptr;
+    MyDecoder *m_mqttDecoder = nullptr;
     MQTT *m_mqtt = nullptr;
+    VideoSource m_activeVideoSource = VideoSource::Udp;
+    VideoFrame m_lastUdpFrame;
+    VideoFrame m_lastMqttFrame;
+    bool m_hasLastUdpFrame = false;
+    bool m_hasLastMqttFrame = false;
     quint64 m_latencyFrameCount = 0;
     QQueue<qint64> m_recentLatencies;
     qint64 m_recentLatencySumMs = 0;

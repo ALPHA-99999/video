@@ -12,8 +12,13 @@ APP_BIN="${INSTALL_PATH}/opt/untitled/bin/untitled"
 BIN_DIR="${PACKAGE_ROOT}/bin"
 LIB_DIR="${PACKAGE_ROOT}/lib"
 PLUGIN_DIR="${PACKAGE_ROOT}/plugins/platforms"
+XCB_GL_DIR="${PACKAGE_ROOT}/plugins/xcbglintegrations"
 QT_PLUGIN_ROOT="${QT_PLUGIN_ROOT:-$(qmake6 -query QT_INSTALL_PLUGINS)}"
 ARCHIVE_PATH="${PROJECT_ROOT}/dist/${PACKAGE_NAME}.tar.gz"
+DEPLOY_SCRIPT="${PROJECT_ROOT}/deploy_ubuntu.sh"
+PACKAGE_SCRIPT="${PROJECT_ROOT}/package_ubuntu.sh"
+QXCB_GLX_PLUGIN="${QT_PLUGIN_ROOT}/xcbglintegrations/libqxcb-glx-integration.so"
+QXCB_EGL_PLUGIN="${QT_PLUGIN_ROOT}/xcbglintegrations/libqxcb-egl-integration.so"
 
 if [[ ! -x "${APP_BIN}" ]]; then
   echo "Packaged binary not found: ${APP_BIN}" >&2
@@ -21,17 +26,27 @@ if [[ ! -x "${APP_BIN}" ]]; then
   exit 1
 fi
 
-mkdir -p "${PACKAGE_ROOT}" "${BIN_DIR}" "${LIB_DIR}" "${PLUGIN_DIR}"
+mkdir -p "${PACKAGE_ROOT}" "${BIN_DIR}" "${LIB_DIR}" "${PLUGIN_DIR}" "${XCB_GL_DIR}"
 rm -rf "${PACKAGE_ROOT:?}/"*
-mkdir -p "${BIN_DIR}" "${LIB_DIR}" "${PLUGIN_DIR}"
+mkdir -p "${BIN_DIR}" "${LIB_DIR}" "${PLUGIN_DIR}" "${XCB_GL_DIR}"
 
 cp -f "${APP_BIN}" "${BIN_DIR}/untitled"
+cp -f "${DEPLOY_SCRIPT}" "${PACKAGE_ROOT}/deploy_ubuntu.sh"
+cp -f "${PACKAGE_SCRIPT}" "${PACKAGE_ROOT}/package_ubuntu.sh"
+chmod +x "${PACKAGE_ROOT}/deploy_ubuntu.sh" "${PACKAGE_ROOT}/package_ubuntu.sh"
 
 if [[ ! -f "${QT_PLUGIN_ROOT}/platforms/libqxcb.so" ]]; then
   echo "Qt platform plugin not found: ${QT_PLUGIN_ROOT}/platforms/libqxcb.so" >&2
   exit 1
 fi
 cp -L "${QT_PLUGIN_ROOT}/platforms/libqxcb.so" "${PLUGIN_DIR}/"
+
+if [[ -f "${QXCB_GLX_PLUGIN}" ]]; then
+  cp -L "${QXCB_GLX_PLUGIN}" "${XCB_GL_DIR}/"
+fi
+if [[ -f "${QXCB_EGL_PLUGIN}" ]]; then
+  cp -L "${QXCB_EGL_PLUGIN}" "${XCB_GL_DIR}/"
+fi
 
 declare -A copied=()
 
@@ -84,6 +99,12 @@ collect_deps() {
 
 collect_deps "${BIN_DIR}/untitled"
 collect_deps "${PLUGIN_DIR}/libqxcb.so"
+if [[ -f "${XCB_GL_DIR}/libqxcb-glx-integration.so" ]]; then
+  collect_deps "${XCB_GL_DIR}/libqxcb-glx-integration.so"
+fi
+if [[ -f "${XCB_GL_DIR}/libqxcb-egl-integration.so" ]]; then
+  collect_deps "${XCB_GL_DIR}/libqxcb-egl-integration.so"
+fi
 
 cat > "${PACKAGE_ROOT}/run.sh" <<'EOF'
 #!/usr/bin/env bash
