@@ -6,13 +6,15 @@
 #include <QByteArray>
 #include <QElapsedTimer>
 #include <QTimer>
-#include <QLabel>
-#include <QMutex>
 
-struct FrameHeader {
-    quint16 frameId;          // 帧编号（2字节）
-    quint16 fragmentId;       // 当前帧内分片序号（2字节）
-    quint32 frameSize;        // 当前帧总字节数（4字节）
+struct StreamPacketHeader {
+    quint32 magic = 0;
+    quint8 version = 0;
+    quint8 flags = 0;
+    quint16 headerSize = 0;
+    quint32 packetSeq = 0;
+    quint16 payloadLen = 0;
+    quint16 syncOffset = 0xFFFF;
 };
 
 class UdpReceiver : public QObject
@@ -26,14 +28,11 @@ public:
     bool startListening();
     void stopListening();
 
-    // 获取统计数据
     quint64 getTotalPackets() const { return m_totalPackets; }
     quint64 getTotalFrames() const { return m_totalFrames; }
     double getPacketLossRate() const { return m_packetLossRate; }
 
 signals:
-    // 统计信息更新
-    // 错误信息
     void errorOccurred(const QString &error);
     void frame_toproess(QByteArray frameData, qint64 udpFirstRecvMs, qint64 udpAssembledMs);
 
@@ -42,33 +41,27 @@ private slots:
     void updateStatistics();
 
 private:
-    QUdpSocket *m_udpSocket;
-    quint16 m_port;
+    StreamPacketHeader parseHeader(const QByteArray &data) const;
+    void processPacket(const StreamPacketHeader &header, const QByteArray &payload, qint64 recvMs);
+    void emitStreamChunk(const QByteArray &payload, qint64 firstRecvMs, qint64 assembledMs);
+    void resetStreamState();
 
-    // 帧重组缓冲区
-    QMap<quint16, QMap<quint16, QByteArray>> m_frameBuffers; // frameId -> fragmentId -> data
-    QMap<quint16, quint32> m_frameSizes; // frameId -> expected total size
-    QMap<quint16, qint64> m_frameFirstRecvMs; // frameId -> first UDP fragment receive time (ms)
+private:
+    QUdpSocket *m_udpSocket = nullptr;
+    quint16 m_port = 3334;
 
-    // 统计信息
-    quint64 m_totalPackets;
-    quint64 m_totalFrames;
-    quint64 m_lostPackets;
-    quint16 m_lastFrameId;
-    quint16 m_packetLossRate;
-    QTimer *m_statsTimer;
-    QLabel *m_displayLabel;
+    quint64 m_totalPackets = 0;
+    quint64 m_totalFrames = 0;
+    quint64 m_lostPackets = 0;
+    double m_packetLossRate = 0.0;
+    QTimer *m_statsTimer = nullptr;
     quint64 m_packetsSinceLog = 0;
     quint64 m_framesSinceLog = 0;
     QElapsedTimer m_statsWindowTimer;
-    // 线程安全
-    mutable QMutex m_mutex;
 
-    FrameHeader parseHeader(const QByteArray &data);
-    void processFrameData(quint16 frameId);
-    void cleanupOldFrames();
-    QImage frameDecoded(QImage image);
-
+    bool m_hasExpectedPacketSeq = false;
+    quint32 m_expectedPacketSeq = 0;
+    bool m_waitingForKeyframe = true;
 };
 
 #endif // UDPRECEIVER_H

@@ -29,6 +29,7 @@ private:
 
     bool m_decoderInitialized = false;
     const AVCodec *m_codec = nullptr;
+    AVCodecParserContext *m_parser = nullptr;
     AVCodecContext *m_codecCtx = nullptr;
     AVPacket *m_packet = nullptr;
     AVFrame *m_frame = nullptr;

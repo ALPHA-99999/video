@@ -1,20 +1,23 @@
 #include "udpreceiver.h"
-#include <QNetworkDatagram>
+
 #include <QDateTime>
 #include <QDebug>
-#include <QImage>
-#include <QThread>
+#include <QNetworkDatagram>
+
 #include <algorithm>
+
+namespace {
+constexpr quint32 kStreamMagic = 0x4C425331; // "LBS1"
+constexpr quint8 kStreamVersion = 1;
+constexpr quint8 kStreamFlagKeyframe = 1u << 0;
+constexpr quint8 kStreamFlagEndOfStream = 1u << 1;
+constexpr int kStreamHeaderSize = 16;
+constexpr quint16 kInvalidSyncOffset = 0xFFFF;
+}
+
 UdpReceiver::UdpReceiver(QObject *parent)
     : QObject(parent)
-    , m_udpSocket(nullptr)
-    , m_port(3334)
-    , m_totalPackets(0)
-    , m_totalFrames(0)
-    , m_lostPackets(0)
-    , m_lastFrameId(0)
 {
-
     m_statsTimer = new QTimer(this);
     connect(m_statsTimer, &QTimer::timeout, this, &UdpReceiver::updateStatistics);
     m_statsWindowTimer.start();
@@ -27,9 +30,11 @@ UdpReceiver::~UdpReceiver()
 
 bool UdpReceiver::startListening()
 {
+    if (m_udpSocket) {
+        return true;
+    }
 
     m_udpSocket = new QUdpSocket(this);
-
     if (!m_udpSocket->bind(QHostAddress::Any, m_port, QUdpSocket::ShareAddress)) {
         emit errorOccurred(QString("无法绑定到端口 %1: %2")
                                .arg(m_port)
@@ -39,13 +44,11 @@ bool UdpReceiver::startListening()
         return false;
     }
 
-    // 设置接收缓冲区大小（可根据需要调整）
-    m_udpSocket->setSocketOption(QAbstractSocket::ReceiveBufferSizeSocketOption, 3080 * 2160 * 10); // 10MB
-
+    m_udpSocket->setSocketOption(QAbstractSocket::ReceiveBufferSizeSocketOption, 3080 * 2160 * 10);
     connect(m_udpSocket, &QUdpSocket::readyRead, this, &UdpReceiver::readPendingDatagrams);
-    //connect(this, &UdpReceiver::frameReceived, this, &UdpReceiver::Proessframe);
-    m_statsTimer->start(1000); // 每秒更新一次统计信息
 
+    resetStreamState();
+    m_statsTimer->start(1000);
     qDebug() << "开始监听UDP端口:" << m_port;
     return true;
 }
@@ -58,146 +61,157 @@ void UdpReceiver::stopListening()
         m_udpSocket = nullptr;
     }
 
-    if (m_statsTimer->isActive()) {
+    if (m_statsTimer && m_statsTimer->isActive()) {
         m_statsTimer->stop();
     }
 
-    QMutexLocker locker(&m_mutex);
-    m_frameBuffers.clear();
-    m_frameSizes.clear();
-    m_frameFirstRecvMs.clear();
+    resetStreamState();
 }
 
-FrameHeader UdpReceiver::parseHeader(const QByteArray &data)
+StreamPacketHeader UdpReceiver::parseHeader(const QByteArray &data) const
 {
-    FrameHeader header;
-
-    if (data.size() < 8) {
+    StreamPacketHeader header;
+    if (data.size() < kStreamHeaderSize) {
         return header;
     }
-    // 解析头部数据（注意字节序，假设为网络字节序）
-    const quint8 *ptr = reinterpret_cast<const quint8*>(data.constData());
 
-    header.frameId = (ptr[0] << 8) | ptr[1];
-    header.fragmentId = (ptr[2] << 8) | ptr[3];
-    header.frameSize = (ptr[4] << 24) | (ptr[5] << 16) | (ptr[6] << 8) | ptr[7];
-
+    const quint8 *ptr = reinterpret_cast<const quint8 *>(data.constData());
+    header.magic = (static_cast<quint32>(ptr[0]) << 24)
+                 | (static_cast<quint32>(ptr[1]) << 16)
+                 | (static_cast<quint32>(ptr[2]) << 8)
+                 | static_cast<quint32>(ptr[3]);
+    header.version = ptr[4];
+    header.flags = ptr[5];
+    header.headerSize = (static_cast<quint16>(ptr[6]) << 8) | static_cast<quint16>(ptr[7]);
+    header.packetSeq = (static_cast<quint32>(ptr[8]) << 24)
+                     | (static_cast<quint32>(ptr[9]) << 16)
+                     | (static_cast<quint32>(ptr[10]) << 8)
+                     | static_cast<quint32>(ptr[11]);
+    header.payloadLen = (static_cast<quint16>(ptr[12]) << 8) | static_cast<quint16>(ptr[13]);
+    header.syncOffset = (static_cast<quint16>(ptr[14]) << 8) | static_cast<quint16>(ptr[15]);
     return header;
 }
 
 void UdpReceiver::readPendingDatagrams()
 {
-    while (m_udpSocket->hasPendingDatagrams()) {
-        const qint64 recvMs = QDateTime::currentMSecsSinceEpoch();
-        QNetworkDatagram datagram = m_udpSocket->receiveDatagram();
-        QByteArray data = datagram.data();
-
-        if (data.size() <= 8) {
-            continue; // 数据太短，忽略
-        }
-
-        m_totalPackets++;
-        ++m_packetsSinceLog;
-
-        // 解析头部
-        FrameHeader header = parseHeader(data);
-
-        if (header.frameSize == 0 || header.frameSize > 10 * 1024 * 1024) {
-            // 帧大小异常，忽略
-            continue;
-        }
-
-        QMutexLocker locker(&m_mutex);
-
-        // 存储分片数据（去掉8字节头部）
-        QByteArray fragmentData = data.mid(8);
-        m_frameBuffers[header.frameId][header.fragmentId] = fragmentData;
-
-        // 记录帧的总大小
-        if (!m_frameSizes.contains(header.frameId)) {
-            m_frameSizes[header.frameId] = header.frameSize;
-        }
-        // 记录该帧第一个分片到达时间（用于端到端延迟统计）
-        if (!m_frameFirstRecvMs.contains(header.frameId)) {
-            m_frameFirstRecvMs[header.frameId] = recvMs;
-        }
-
-        // 检查是否收到完整帧
-        processFrameData(header.frameId);
-
-        // 清理旧帧（防止内存泄漏）
-        if (m_frameBuffers.size() > 50) {
-            cleanupOldFrames();
-        }
-    }
-
-}
-
-void UdpReceiver::processFrameData(quint16 frameId)
-{
-    if (!m_frameBuffers.contains(frameId) || !m_frameSizes.contains(frameId)) {
+    if (!m_udpSocket) {
         return;
     }
 
-    QMap<quint16, QByteArray> &fragments = m_frameBuffers[frameId];
-    quint32 expectedSize = m_frameSizes[frameId];
+    while (m_udpSocket->hasPendingDatagrams()) {
+        const qint64 recvMs = QDateTime::currentMSecsSinceEpoch();
+        const QNetworkDatagram datagram = m_udpSocket->receiveDatagram();
+        const QByteArray data = datagram.data();
 
-    // 计算已收到的数据大小
-    quint32 receivedSize = 0;
-    for (const QByteArray &fragment : fragments) {
-        receivedSize += fragment.size();
-    }
-
-    // 如果收到的数据达到预期大小，则认为帧完整
-    if (receivedSize == expectedSize) {
-        // 组装完整帧
-        // qDebug()<<receivedSize<<""<<expectedSize;
-        QByteArray completeFrame;
-        completeFrame.reserve(expectedSize);
-
-        // 按照分片序号排序组装
-        QList<quint16> fragmentIds = fragments.keys();
-        std::sort(fragmentIds.begin(), fragmentIds.end());
-
-        for (quint16 fragId : fragmentIds) {
-            completeFrame.append(fragments[fragId]);
-
-            // 如果已经达到预期大小，停止添加（可能有重复包）
-            if (completeFrame.size() >= static_cast<int>(expectedSize)) {
-                completeFrame.resize(expectedSize);
-                break;
-            }
+        if (data.size() < kStreamHeaderSize) {
+            continue;
         }
 
-        if (completeFrame.size() == static_cast<int>(expectedSize)) {
-            const qint64 firstRecvMs = m_frameFirstRecvMs.value(frameId, QDateTime::currentMSecsSinceEpoch());
-            const qint64 assembledMs = QDateTime::currentMSecsSinceEpoch();
-            emit frame_toproess(completeFrame, firstRecvMs, assembledMs);
-            m_totalFrames++;
-            ++m_framesSinceLog;
-
-            // 移除已处理的帧
-            m_frameBuffers.remove(frameId);
-            m_frameSizes.remove(frameId);
-            m_frameFirstRecvMs.remove(frameId);
+        const StreamPacketHeader header = parseHeader(data);
+        if (header.magic != kStreamMagic) {
+            qWarning() << "UDP packet magic invalid:" << QString::number(header.magic, 16);
+            continue;
         }
+        if (header.version != kStreamVersion) {
+            qWarning() << "UDP packet version invalid:" << header.version;
+            continue;
+        }
+        if (header.headerSize != kStreamHeaderSize) {
+            qWarning() << "UDP packet header size invalid:" << header.headerSize;
+            continue;
+        }
+        if (header.payloadLen > static_cast<quint16>(data.size() - header.headerSize)) {
+            qWarning() << "UDP payload length invalid:" << header.payloadLen
+                       << "datagramBytes=" << data.size();
+            continue;
+        }
+
+        const QByteArray payload = data.mid(header.headerSize, header.payloadLen);
+        processPacket(header, payload, recvMs);
     }
 }
 
-void UdpReceiver::cleanupOldFrames()
+void UdpReceiver::processPacket(const StreamPacketHeader &header, const QByteArray &payload, qint64 recvMs)
 {
-    // 移除最旧的帧
-    QList<quint16> frameIds = m_frameBuffers.keys();
-    if (!frameIds.isEmpty()) {
-        std::sort(frameIds.begin(), frameIds.end());
-        int framesToRemove = qMin(10, frameIds.size() / 2);
+    ++m_totalPackets;
+    ++m_packetsSinceLog;
 
-        for (int i = 0; i < framesToRemove; i++) {
-            m_frameBuffers.remove(frameIds[i]);
-            m_frameSizes.remove(frameIds[i]);
-            m_frameFirstRecvMs.remove(frameIds[i]);
-        }
+    if (!m_hasExpectedPacketSeq) {
+        m_hasExpectedPacketSeq = true;
+        m_expectedPacketSeq = header.packetSeq;
+        m_waitingForKeyframe = true;
     }
+
+    if (header.packetSeq > m_expectedPacketSeq) {
+        const quint64 lost = static_cast<quint64>(header.packetSeq - m_expectedPacketSeq);
+        m_lostPackets += lost;
+        m_waitingForKeyframe = true;
+        qWarning().noquote() << QString("UDP packet loss detected: expected=0x%1 got=0x%2 lost=%3")
+                                    .arg(m_expectedPacketSeq, 8, 16, QLatin1Char('0')).toUpper()
+                                    .arg(header.packetSeq, 8, 16, QLatin1Char('0')).toUpper()
+                                    .arg(lost);
+    } else if (header.packetSeq < m_expectedPacketSeq) {
+        qDebug().noquote() << QString("UDP duplicate/out-of-order packet ignored: seq=0x%1 expected=0x%2")
+                                  .arg(header.packetSeq, 8, 16, QLatin1Char('0')).toUpper()
+                                  .arg(m_expectedPacketSeq, 8, 16, QLatin1Char('0')).toUpper();
+        return;
+    }
+
+    const bool isKeyframePacket = (header.flags & kStreamFlagKeyframe) != 0;
+    const bool isEndOfStream = (header.flags & kStreamFlagEndOfStream) != 0;
+
+    if (m_waitingForKeyframe) {
+        // 丢包或刚启动后，先等到新的 keyframe 同步点再把数据交给解码器。
+        if (!isKeyframePacket) {
+            m_expectedPacketSeq = header.packetSeq + 1;
+            return;
+        }
+
+        const quint16 syncOffset = (header.syncOffset == kInvalidSyncOffset) ? 0 : header.syncOffset;
+        if (syncOffset >= payload.size()) {
+            qWarning() << "UDP keyframe sync offset out of range:"
+                       << "seq=" << header.packetSeq
+                       << "syncOffset=" << syncOffset
+                       << "payloadSize=" << payload.size();
+            m_expectedPacketSeq = header.packetSeq + 1;
+            return;
+        }
+
+        // sync_offset 之前的字节属于旧同步点，丢失后不能再用于重建码流。
+        const QByteArray syncedPayload = payload.mid(syncOffset);
+        if (!syncedPayload.isEmpty()) {
+            emitStreamChunk(syncedPayload, recvMs, recvMs);
+            ++m_totalFrames;
+            ++m_framesSinceLog;
+        }
+
+        m_waitingForKeyframe = false;
+        m_expectedPacketSeq = header.packetSeq + 1;
+    } else {
+        if (!payload.isEmpty()) {
+            emitStreamChunk(payload, recvMs, recvMs);
+            ++m_totalFrames;
+            ++m_framesSinceLog;
+        }
+        m_expectedPacketSeq = header.packetSeq + 1;
+    }
+
+    if (isEndOfStream) {
+        qDebug() << "UDP end-of-stream packet received, waiting for next keyframe to resume";
+        m_waitingForKeyframe = true;
+    }
+}
+
+void UdpReceiver::emitStreamChunk(const QByteArray &payload, qint64 firstRecvMs, qint64 assembledMs)
+{
+    emit frame_toproess(payload, firstRecvMs, assembledMs);
+}
+
+void UdpReceiver::resetStreamState()
+{
+    m_hasExpectedPacketSeq = false;
+    m_expectedPacketSeq = 0;
+    m_waitingForKeyframe = true;
 }
 
 void UdpReceiver::updateStatistics()
@@ -209,28 +223,21 @@ void UdpReceiver::updateStatistics()
 
     const double seconds = static_cast<double>(elapsedMs) / 1000.0;
     const double packetRate = static_cast<double>(m_packetsSinceLog) / seconds;
-    const double frameRate = static_cast<double>(m_framesSinceLog) / seconds;
+    const double chunkRate = static_cast<double>(m_framesSinceLog) / seconds;
+    const double packetLossRate = (m_totalPackets == 0)
+        ? 0.0
+        : (static_cast<double>(m_lostPackets) * 100.0 / static_cast<double>(m_totalPackets + m_lostPackets));
+    m_packetLossRate = packetLossRate;
 
-    qDebug().noquote() << QString("UDP stats: packets=%1 frames=%2 packetRate=%3/s frameRate=%4/s")
+    qDebug().noquote() << QString("UDP stats: packets=%1 chunks=%2 lost=%3 lossRate=%4%% packetRate=%5/s chunkRate=%6/s")
                               .arg(m_totalPackets)
                               .arg(m_totalFrames)
+                              .arg(m_lostPackets)
+                              .arg(packetLossRate, 0, 'f', 2)
                               .arg(packetRate, 0, 'f', 2)
-                              .arg(frameRate, 0, 'f', 2);
+                              .arg(chunkRate, 0, 'f', 2);
 
     m_packetsSinceLog = 0;
     m_framesSinceLog = 0;
     m_statsWindowTimer.restart();
-
-   //  emit statsUpdated(m_totalPackets, m_totalFrames, m_packetLossRate);
 }
-
-// QImage UdpReceiver::frameDecoded(QImage image)
-// {
-//     m_displayLabel->setPixmap(QPixmap::fromImage(image)
-//                                       .scaled(m_displayLabel->size(),
-//                                               Qt::KeepAspectRatio,
-//                                               Qt::SmoothTransformation));
-
-//         m_displayLabel->setAlignment(Qt::AlignCenter);
-
-// }

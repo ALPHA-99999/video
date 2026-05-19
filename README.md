@@ -62,3 +62,14 @@ bash package_ubuntu.sh
 
 可复制 `local_paths.pri.example` 为 `local_paths.pri`，按本机修改路径。  
 当前仓库默认从 `/home/arty/Documents/video_ros2/install` 读取 `QMQTT` 的头文件和 `libqmqtt.so`，如果你把它放到了别的位置，只需要改 `local_paths.pri` 里的 `QMQTT_ROOT`。
+
+## UDP 传输协议
+
+UDP 这一条链路现在跟 `/home/arty/Documents/Send_HEVC-` 保持一致：
+
+- 每个 UDP datagram 固定 300 字节。
+- 前 16 字节是协议头，字段依次是 `magic/version/flags/headerSize/packetSeq/payloadLen/syncOffset`。
+- `magic` 固定为 `LBS1`，`version` 当前是 `1`。
+- `payloadLen` 表示本包内有效码流字节数，后面的填充字节不参与解码。
+- `flags` 里 `keyframe` 表示当前包里包含新的同步点，`end_of_stream` 表示流结束。
+- `syncOffset` 用来标记 keyframe 在 payload 内的起始位置；一旦丢包，接收端会丢弃旧码流，直到收到新的 keyframe 再恢复解码。

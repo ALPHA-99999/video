@@ -31,20 +31,6 @@ const char *hwDeviceTypeName(AVHWDeviceType type)
     }
 }
 
-const char *pictureTypeName(AVPictureType type)
-{
-    switch (type) {
-    case AV_PICTURE_TYPE_I:
-        return "I";
-    case AV_PICTURE_TYPE_P:
-        return "P";
-    case AV_PICTURE_TYPE_B:
-        return "B";
-    default:
-        return "?";
-    }
-}
-
 inline void copyPlaneTight(QByteArray &dst, const uint8_t *src, int srcLinesize, int rowBytes, int rows)
 {
     if (!src || rowBytes <= 0 || rows <= 0) {
@@ -71,6 +57,10 @@ MyDecoder::MyDecoder(QObject *parent)
 
 MyDecoder::~MyDecoder()
 {
+    if (m_parser) {
+        av_parser_close(m_parser);
+        m_parser = nullptr;
+    }
     if (m_packet) {
         av_packet_free(&m_packet);
     }
@@ -189,6 +179,12 @@ bool MyDecoder::initDecoder()
         return false;
     }
 
+    m_parser = av_parser_init(AV_CODEC_ID_HEVC);
+    if (!m_parser) {
+        qWarning() << "无法初始化HEVC解析器";
+        return false;
+    }
+
     m_codecCtx = avcodec_alloc_context3(m_codec);
     if (!m_codecCtx) {
         qWarning() << "无法分配解码器上下文";
@@ -241,69 +237,97 @@ bool MyDecoder::initDecoder()
 
 void MyDecoder::Decode(QByteArray frameData, qint64 udpFirstRecvMs, qint64 udpAssembledMs)
 {
-    if (!m_decoderInitialized || !m_packet || !m_frame) {
+    if (!m_decoderInitialized || !m_packet || !m_frame || !m_parser) {
         qWarning() << "解码器未初始化";
         return;
     }
 
-    av_packet_unref(m_packet);
-    if (av_new_packet(m_packet, frameData.size()) < 0) {
-        qWarning() << "AVPacket内存分配失败";
-        return;
-    }
-    std::memcpy(m_packet->data, frameData.constData(), frameData.size());
+    const uint8_t *inputData = reinterpret_cast<const uint8_t *>(frameData.constData());
+    int inputSize = frameData.size();
 
-    int ret = avcodec_send_packet(m_codecCtx, m_packet);
-    if (ret == AVERROR(EAGAIN)) {
-        qWarning() << "缓冲区已满，需要读取掉一些解码后的音视频帧";
-    } else if (ret < 0) {
-        qWarning() << "发送packet到解码器失败";
-        return;
-    }
+    while (inputSize > 0) {
+        AVPacket parserPacket{};
 
-    while (true) {
-        av_frame_unref(m_frame);
-        ret = avcodec_receive_frame(m_codecCtx, m_frame);
-        if (ret == 0) {
-            if (m_frame->pict_type == AV_PICTURE_TYPE_I) {
-                ++m_iFramesSinceLog;
-            } else if (m_frame->pict_type == AV_PICTURE_TYPE_P) {
-                ++m_pFramesSinceLog;
-            } else {
-                ++m_decodedFramesSinceLog;
-            }
+        int parsed = av_parser_parse2(m_parser,
+                                      m_codecCtx,
+                                      &parserPacket.data,
+                                      &parserPacket.size,
+                                      inputData,
+                                      inputSize,
+                                      AV_NOPTS_VALUE,
+                                      AV_NOPTS_VALUE,
+                                      0);
+        if (parsed < 0) {
+            qWarning() << "HEVC码流解析失败:" << parsed;
+            return;
+        }
 
-            const qint64 elapsedMs = m_decodeLogTimer.elapsed();
-            if (elapsedMs >= 5000) {
-                const double seconds = static_cast<double>(elapsedMs) / 1000.0;
-                const quint64 totalFrames = m_iFramesSinceLog + m_pFramesSinceLog + m_decodedFramesSinceLog;
-                const double frameRate = static_cast<double>(totalFrames) / seconds;
-                qDebug().noquote() << QString("Decode stats: total=%1 I=%2 P=%3 other=%4 rate=%5/s")
-                                          .arg(totalFrames)
-                                          .arg(m_iFramesSinceLog)
-                                          .arg(m_pFramesSinceLog)
-                                          .arg(m_decodedFramesSinceLog)
-                                          .arg(frameRate, 0, 'f', 2);
-                m_iFramesSinceLog = 0;
-                m_pFramesSinceLog = 0;
-                m_decodedFramesSinceLog = 0;
-                m_decodeLogTimer.restart();
-            }
-            VideoFrame outFrame;
-            outFrame.udpFirstRecvMs = udpFirstRecvMs;
-            outFrame.udpAssembledMs = udpAssembledMs;
-            outFrame.decodeStartMs = QDateTime::currentMSecsSinceEpoch();
-            if (extractFramePlanes(m_frame, outFrame)) {
-                outFrame.decodeDoneMs = QDateTime::currentMSecsSinceEpoch();
-                emit show__frame(outFrame);
-            }
+        inputData += parsed;
+        inputSize -= parsed;
+
+        if (parserPacket.size <= 0) {
             continue;
         }
-        if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
+
+        av_packet_unref(m_packet);
+        if (av_new_packet(m_packet, parserPacket.size) < 0) {
+            qWarning() << "AVPacket内存分配失败";
+            return;
+        }
+        std::memcpy(m_packet->data, parserPacket.data, static_cast<size_t>(parserPacket.size));
+
+        int ret = avcodec_send_packet(m_codecCtx, m_packet);
+        if (ret == AVERROR(EAGAIN)) {
+            qWarning() << "缓冲区已满，需要读取掉一些解码后的音视频帧";
+        } else if (ret < 0) {
+            qWarning() << "发送packet到解码器失败";
+            return;
+        }
+
+        while (true) {
+            av_frame_unref(m_frame);
+            ret = avcodec_receive_frame(m_codecCtx, m_frame);
+            if (ret == 0) {
+                if (m_frame->pict_type == AV_PICTURE_TYPE_I) {
+                    ++m_iFramesSinceLog;
+                } else if (m_frame->pict_type == AV_PICTURE_TYPE_P) {
+                    ++m_pFramesSinceLog;
+                } else {
+                    ++m_decodedFramesSinceLog;
+                }
+
+                const qint64 elapsedMs = m_decodeLogTimer.elapsed();
+                if (elapsedMs >= 5000) {
+                    const double seconds = static_cast<double>(elapsedMs) / 1000.0;
+                    const quint64 totalFrames = m_iFramesSinceLog + m_pFramesSinceLog + m_decodedFramesSinceLog;
+                    const double frameRate = static_cast<double>(totalFrames) / seconds;
+                    qDebug().noquote() << QString("Decode stats: total=%1 I=%2 P=%3 other=%4 rate=%5/s")
+                                              .arg(totalFrames)
+                                              .arg(m_iFramesSinceLog)
+                                              .arg(m_pFramesSinceLog)
+                                              .arg(m_decodedFramesSinceLog)
+                                              .arg(frameRate, 0, 'f', 2);
+                    m_iFramesSinceLog = 0;
+                    m_pFramesSinceLog = 0;
+                    m_decodedFramesSinceLog = 0;
+                    m_decodeLogTimer.restart();
+                }
+                VideoFrame outFrame;
+                outFrame.udpFirstRecvMs = udpFirstRecvMs;
+                outFrame.udpAssembledMs = udpAssembledMs;
+                outFrame.decodeStartMs = QDateTime::currentMSecsSinceEpoch();
+                if (extractFramePlanes(m_frame, outFrame)) {
+                    outFrame.decodeDoneMs = QDateTime::currentMSecsSinceEpoch();
+                    emit show__frame(outFrame);
+                }
+                continue;
+            }
+            if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF) {
+                break;
+            }
+            qWarning() << "解码错误:" << ret;
             break;
         }
-        qWarning() << "解码错误:" << ret;
-        break;
     }
 }
 
