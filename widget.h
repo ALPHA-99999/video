@@ -11,6 +11,7 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QResizeEvent>
+#include <QWheelEvent>
 #include <QVBoxLayout>
 #include <QString>
 #include <decoder.h>
@@ -74,6 +75,7 @@ private:
     void setActiveVideoSource(VideoSource source);
     void presentActiveSourceFrame();
     void applyVideoSourceLayout(VideoSource source);
+    void adjustMqttVideoDisplaySize(int deltaSteps);
     void showToast(const QString &message, ToastKind kind = ToastKind::Info);
     void updateMqttUiState();
     QString mqttErrorText(QMQTT::ClientError error) const;
@@ -92,6 +94,7 @@ private:
     VideoFrame m_lastMqttFrame;
     bool m_hasLastUdpFrame = false;
     bool m_hasLastMqttFrame = false;
+    int m_mqttDisplaySize = 400;
     quint64 m_latencyFrameCount = 0;
     QQueue<qint64> m_recentLatencies;
     qint64 m_recentLatencySumMs = 0;

@@ -14,7 +14,53 @@
 #include <QListView>
 #include <QVBoxLayout>
 #include <QThread>
+#include <QWheelEvent>
 #include <algorithm>
+#include <cstring>
+
+namespace {
+
+void flipPlaneVertically(QByteArray &plane, int linesize, int rowBytes, int rows)
+{
+    if (plane.isEmpty() || linesize <= 0 || rowBytes <= 0 || rows <= 1) {
+        return;
+    }
+
+    QByteArray flipped;
+    flipped.resize(rowBytes * rows);
+    for (int y = 0; y < rows; ++y) {
+        const int srcRow = rows - 1 - y;
+        std::memcpy(flipped.data() + y * rowBytes,
+                    plane.constData() + srcRow * linesize,
+                    rowBytes);
+    }
+    plane = std::move(flipped);
+}
+
+VideoFrame makeVerticallyFlippedFrame(const VideoFrame &frame)
+{
+    VideoFrame flipped = frame;
+    switch (frame.pixelFormat) {
+    case VideoFrame::PixelFormatNV12:
+        flipPlaneVertically(flipped.plane[0], frame.width, frame.width, frame.height);
+        flipPlaneVertically(flipped.plane[1], frame.width, frame.width, frame.height / 2);
+        break;
+    case VideoFrame::PixelFormatYUV420P:
+        flipPlaneVertically(flipped.plane[0], frame.width, frame.width, frame.height);
+        flipPlaneVertically(flipped.plane[1], frame.width / 2, frame.width / 2, frame.height / 2);
+        flipPlaneVertically(flipped.plane[2], frame.width / 2, frame.width / 2, frame.height / 2);
+        break;
+    case VideoFrame::PixelFormatRGB24:
+        flipPlaneVertically(flipped.plane[0], frame.width * 3, frame.width * 3, frame.height);
+        break;
+    default:
+        break;
+    }
+    return flipped;
+}
+
+} // namespace
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
@@ -236,6 +282,15 @@ bool Widget::eventFilter(QObject *watched, QEvent *event)
             setActiveVideoSource(nextSource);
             return true;
         }
+    } else if (event->type() == QEvent::Wheel) {
+        if (m_activeVideoSource == VideoSource::Mqtt && ui && ui->videoWidget && watched == ui->videoWidget) {
+            auto *wheelEvent = static_cast<QWheelEvent *>(event);
+            const QPoint angleDelta = wheelEvent->angleDelta();
+            if (angleDelta.y() != 0) {
+                adjustMqttVideoDisplaySize(angleDelta.y() > 0 ? 1 : -1);
+                return true;
+            }
+        }
     }
     return QWidget::eventFilter(watched, event);
 }
@@ -302,7 +357,7 @@ void Widget::applyVideoSourceLayout(VideoSource source)
 
     if (source == VideoSource::Mqtt) {
         ui->videoWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        ui->videoWidget->setFixedSize(400, 400);
+        ui->videoWidget->setFixedSize(m_mqttDisplaySize, m_mqttDisplaySize);
         ui->rootLayout->setAlignment(ui->videoWidget, Qt::AlignCenter);
     } else {
         ui->videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -314,6 +369,29 @@ void Widget::applyVideoSourceLayout(VideoSource source)
     ui->videoWidget->updateGeometry();
     ui->rootLayout->invalidate();
     ui->rootLayout->activate();
+}
+
+void Widget::adjustMqttVideoDisplaySize(int deltaSteps)
+{
+    if (m_activeVideoSource != VideoSource::Mqtt || !ui || !ui->videoWidget) {
+        return;
+    }
+
+    if (deltaSteps == 0) {
+        return;
+    }
+
+    const int kMinSize = 200;
+    const int kMaxSize = 1000;
+    const int kStepSize = 40;
+
+    m_mqttDisplaySize = std::clamp(m_mqttDisplaySize + deltaSteps * kStepSize, kMinSize, kMaxSize);
+    ui->videoWidget->setFixedSize(m_mqttDisplaySize, m_mqttDisplaySize);
+    ui->videoWidget->updateGeometry();
+    if (ui->rootLayout) {
+        ui->rootLayout->invalidate();
+        ui->rootLayout->activate();
+    }
 }
 
 void Widget::presentActiveSourceFrame()
@@ -347,10 +425,10 @@ void Widget::onUdpDecodedFrame(const VideoFrame &frame)
 
 void Widget::onMqttDecodedFrame(const VideoFrame &frame)
 {
-    m_lastMqttFrame = frame;
+    m_lastMqttFrame = makeVerticallyFlippedFrame(frame);
     m_hasLastMqttFrame = true;
     if (m_activeVideoSource == VideoSource::Mqtt && ui && ui->videoWidget) {
-        ui->videoWidget->submitFrame(frame);
+        ui->videoWidget->submitFrame(m_lastMqttFrame);
     }
 }
 
